@@ -1,0 +1,111 @@
+import React, { Component } from "react";
+import 'semantic-ui-css/semantic.min.css';
+import {Checkbox,
+    Grid,
+    Header,
+    Icon,
+    Image,
+    Menu,
+    Segment,
+    Sidebar,Container} from 'semantic-ui-react';
+
+import "./Main.css";
+
+import farm from "../../icons/FarmIcon.png";
+
+import bridgeIcon from "../../icons/BitcloutBridgeIcon.png";
+
+import { Route, HashRouter, NavLink } from "react-router-dom";
+
+import LaunchPage from "../LaunchPage/LaunchPage.js";
+
+import Bridge from "../Bridge/Bridge.js";
+
+
+class Main extends Component{
+
+    constructor(props){
+        super();
+        this.props = props;
+    }
+
+    render(){
+        return (
+            <div id="mainDiv">
+            <Sidebar.Pushable>
+                <Sidebar as={Menu}
+                    vertical 
+                    borderless 
+                    visible={this.props.visible} 
+                    animation='overlay'>
+                    
+                    <Menu.Item >
+                        
+                    </Menu.Item>
+
+                    <Menu.Item >
+                        
+                    </Menu.Item>
+                    
+                    <Menu.Item>
+                        <NavLink to = "/" >
+                            <Grid columns={4}>
+                                <Grid.Column></Grid.Column>
+                                <Grid.Column><Icon name='rocket' color='black'/></Grid.Column>
+                                <Grid.Column><Header >Launch</Header></Grid.Column>
+                                <Grid.Column></Grid.Column>
+                            </Grid>
+                        </NavLink>
+                    </Menu.Item>
+                    <Menu.Item >
+                        
+                    </Menu.Item>
+                    <Menu.Item>
+                        <NavLink to = "/bridge">
+                            <Grid columns={4}>
+                                <Grid.Column></Grid.Column>
+                                <Grid.Column><img src={bridgeIcon}/></Grid.Column>
+                                <Grid.Column><Header >Bridge</Header></Grid.Column>
+                                <Grid.Column></Grid.Column>
+                            </Grid>
+                        </NavLink>
+                    </Menu.Item>
+                    <Menu.Item >
+                        
+                    </Menu.Item>
+                    <Menu.Item>
+
+                            <Grid columns={4}>
+                                <Grid.Column></Grid.Column>
+                                <Grid.Column><img src={farm} id='farm'/></Grid.Column>
+                                <Grid.Column><Header >Farm</Header></Grid.Column>
+                                <Grid.Column></Grid.Column>
+                            </Grid>
+                    </Menu.Item>
+                    <Menu.Item >
+                        
+                    </Menu.Item>
+                    <Menu.Item >
+                        <Grid columns={4}>
+                            <Grid.Column></Grid.Column>
+                            <Grid.Column><Icon name='arrows alternate horizontal' color='black'/></Grid.Column>
+                            <Grid.Column><Header >Swap</Header></Grid.Column>
+                            <Grid.Column></Grid.Column>
+                        </Grid>
+                    </Menu.Item>
+                </Sidebar>
+                <Sidebar.Pusher>
+                    <HashRouter>
+                        <Route exact path='/bridge' render = {(routeProps) => (<Bridge handleBridgeRequest = {this.props.handleBridgeRequest} postMessage = {this.props.postMessage} {...routeProps} {...this.props}/>)}/>
+                        <Route exact path= '/' render ={(routeProps) => (<LaunchPage {...routeProps}/>)}/>
+                    </HashRouter>
+                    
+                </Sidebar.Pusher>
+            </Sidebar.Pushable>
+            </div>
+        );
+    }
+    
+}
+
+export default Main;

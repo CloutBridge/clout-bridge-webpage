@@ -1,0 +1,35 @@
+import React, { Component } from "react";
+import 'semantic-ui-css/semantic.min.css';
+import {Segment, Container, Header, Button, Dropdown, Input } from 'semantic-ui-react';
+
+import CloutBridgeLogo from '../../logos/CloutBridgeLogoShorter.png';
+
+import "./LaunchPage.css"
+
+class LaunchPage extends Component{
+    constructor(props){
+        super();
+        this.props = props;
+    }
+
+    render(){
+        return(
+            <Segment padded='very'>
+
+                <img src ={CloutBridgeLogo} />
+                <Container text>
+                    <Header>The Launch of Clout Bridge is near! </Header>
+                    <ul>
+                       <li><b>The coming bridge will allow Bitclout users to bridge there $CLOUT tokens to and from the Etherem blockchain!</b></li>
+                       <li><b>Once bridged $bCLOUT tokens can be utilized as a 1:1 peg to $CLOUT.</b></li> 
+                       <li><b>Bridged tokens will be utilized for a plethora decentralized applications including token swaps.</b></li>
+                    </ul>
+                    <Header>Support Clout Bridge by purchasing the creator coin <a href='https://bitclout.com/u/CloutBridge'>CloutBridge</a>.</Header>
+                    
+                </Container>
+            </Segment>
+        );
+    }
+}
+
+export default LaunchPage;

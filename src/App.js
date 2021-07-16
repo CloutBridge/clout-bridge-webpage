@@ -3,6 +3,8 @@ import './App.css';
 import React, { Component } from "react";
 import 'semantic-ui-css/semantic.min.css';
 
+import {Segment, SegmentGroup} from 'semantic-ui-react'
+
 import {
   Route,
   HashRouter,
@@ -14,7 +16,8 @@ import bitcloutBridgeContract from "./contracts/BridgedBitclout.json";
 
 import TopBar from "./components/TopBar/TopBar.js";
 
-import Bridge from "./components/Bridge/Bridge.js"
+import Main from "./components/Main/Main.js";
+
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -41,15 +44,21 @@ var encryptedSeedHex = null;
 
 class App extends Component {
 
-  state = {web3: null, accounts: null, iframe: null, selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, bitcloutBridge: null, 
-           bridgeUserButtonText: "Sign Bridge Message.", signedBridgeMessage: null,
-           network: 0};
-
   constructor(){
     super();
+
+    var prod = false;
+
+    this.state = {
+      web3: null, accounts: null, iframe: null, selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, bitcloutBridge: null, 
+      bridgeUserButtonText: "Sign Bridge Message.", signedBridgeMessage: null,
+      network: 0, environment: prod ? "http://3.135.245.95:3001" : "http://localhost:3001",
+      toggleSideBar: true};
+
     this.updateWeb3 = this.updateWeb3.bind(this);
     this.login = this.login.bind(this);
     this.handleBridgeRequest = this.handleBridgeRequest.bind(this);
+    this.toggleSideBar = this.toggleSideBar.bind(this);
     this.postMessage = this.postMessage.bind(this);
     this.listen();
   }
@@ -146,51 +155,6 @@ class App extends Component {
     });
   }
 
-  makeTransactionTest = async () =>{
-
-    console.log(` Selected user: ${selectedUser}`);
-
-      try{
-        var res = await axios.get(`/api/createTransaction?sender=${'BC1YLiH2S2AYcYKt9eNpzv2x4pj8Ndw1konMG7ZkEN11Wd6bBryasx6'}`).then(async (response) =>{
-          return response.data;
-        })
-    
-        console.log(res.transactionHex)
-        console.log(res.transactionHex.length);
-
-        //const aprove =  window.open(`https://identity.bitclout.com/approve?tx=${res.transactionHex}`, null, 'toolbar=no, width=800, height=1000, top=0, left=0')
-
-        // 066aa66e5d38618bfa2d26101a40b6e67cd8c2529db8242834cf913da41746ca6c0081a15ba7f045d949b2b5dcf289efef140993822f39985b131fef68cdb2f3052b00369ce2b086fa0a353e16e568a85d35e37c61c30dd381625e7131f527265d4d8e004ae98b4596458921392876f58eec0680c4d0aa211ceb7e7cf6d6bd04b594aad900fa5ba839807b21178cb4f34597676ed01a64206c6cbc569d8b1dd850f88a514400f0753d896a7150c269fb171d3b1920aaaad1edf28634496ae8fd15546c1d7238010203a6e266bf0c1f175fbe45fe3b11d6937fd3b93a1ec1e79a1dcf84f7eeb33da56701035736fa4674860c51c92489430425467c8e5e23fa23395dd111366479fc5a63e0e8f305020021035736fa4674860c51c92489430425467c8e5e23fa23395dd111366479fc5a63e00000
-        
-        var newId = uuidv4();
-
-        //console.log(`new id ${newId}`)
-
-        var data = "BC1YLit7V8XL4xdAQH3HzsXZhSCcPioe3PGw5tB8h6EXqFwrppVAWHS<->0x4d01C4f0E661347079B7eC9D82EDCfcbFae34c5e";
-        var hexString = Buffer.from(data).toString('hex');
-
-        //console.log(hexString);
-
-        var message = {
-          id: newId,
-          service: 'identity',
-          method: 'burn',
-          payload: {
-            accessLevel: 4,
-            accessLevelHmac: accessLevelHmac,
-            encryptedSeedHex: encryptedSeedHex,
-            unsignedHashes: [ res.transactionHex ]
-          },
-        }
-        console.log(message);
-        this.postMessage(message);
-
-      }catch(error){
-        console.log(error)
-      }
-    
-  }
-
   handleBridgeRequest = async () =>{
 
     console.log("handle bridge request.")
@@ -223,35 +187,15 @@ class App extends Component {
 
   }
 
-  /*/
-  testRequest = async (payload) =>{
+  toggleSideBar = async () =>{
 
-    var bridgeMessageJSON = JSON.parse(payload);
+    var visible = !this.state.toggleSideBar;
 
-    var message = bridgeMessageJSON.message;
+    console.log("toggle sidebar ", visible);
 
-    var messageHash = crypto.createHash("sha256").update(message).digest();
+    this.setState({toggleSideBar: visible})
 
-    var messageArray = message.split("<->");
-
-    if(messageArray.length !== 2){
-      console.log("Incorrect message format.")
-      return [false];
-    }
-
-    var bcltUserPublicKey = messageArray[0];
-        
-    var userPublicKeyBuffer = Buffer.from(bs58check.decode(bcltUserPublicKey).toString('hex').substring(6), 'hex');
-
-    var signature = Buffer.from(bridgeMessageJSON.userSignature.data)
-
-    await eccrypto.verify(userPublicKeyBuffer, messageHash, signature).then(function(){
-      console.log("Signature verified")
-    }).catch(function(){
-      console.log("Signature NOT verified!")
-    })
-
-  }*/
+  }
 
   signBridgeMessageRequest = async () =>{
 
@@ -294,37 +238,21 @@ class App extends Component {
       const network = await web3.eth.getChainId();
       /*
       var networkData = [
-
         {
-
-          chainId: "0x61",
-
+          chainId: "0x61"
           chainName: "BSCTESTNET",
-
           rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545"],
-
           nativeCurrency: {
-
             name: "BINANCE COIN",
-
             symbol: "BNB",
-
             decimals: 18,
-
           },
-
           blockExplorerUrls: ["https://testnet.bscscan.com/"],
-
         },
-
       ];
-
       window.ethereum.request({
-
         method: "wallet_addEthereumChain",
-    
         params: networkData,
-    
       });*/
 
       const bitcloutBridge = new web3.eth.Contract(bitcloutBridgeContract.abi, '0x9f8242Aefb877443F1BC7D81eA350dbcF2F9C403');
@@ -356,26 +284,20 @@ class App extends Component {
 
     var cloutAccount = this.state.selectedUser ? this.state.selectedUser: "Bitclout Sign-In"; 
 
+    var visible = this.state.toggleSideBar;
+
     //console.log(cloutAccount)
     
     return (
       <div className="App">
 
         <iframe id="identity" title="id" frameBorder="1" className="" src="https://identity.bitclout.com/embed?v=2" />
-
+        
         <HashRouter>
-          <TopBar {...this.state} updateWeb3 = {this.updateWeb3} login = {this.login} cloutAccount = {cloutAccount} ethAccount = {ethAccount}/>
-          <Route exact path='/' render = {(routeProps) => (<Bridge handleBridgeRequest = {this.handleBridgeRequest} postMessage = {this.postMessage} {...routeProps} {...this.state}/>)}/>
+          <TopBar {...this.state} updateWeb3 = {this.updateWeb3} login = {this.login} cloutAccount = {cloutAccount} ethAccount = {ethAccount} toggleSideBar = {this.toggleSideBar}/>
+          <Main {...this.state}  visible = {visible}  handleBridgeRequest = {this.handleBridgeRequest} postMessage = {this.postMessage} />
         </HashRouter>
         
-      {/* 
-        <button onClick={this.login} id="login" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Login with BitClout
-        </button>        
-
-        <button onClick={this.makeTransaction} title="view">EncryptMessage</button>
-
-      <div class="mt-6" id="loggedin"></div>*/}
       </div>
     );
 

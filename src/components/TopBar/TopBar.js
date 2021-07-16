@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import 'semantic-ui-css/semantic.min.css';
-import {Menu, Container, Button, Header } from 'semantic-ui-react';
+import {Menu, Container, Button, Header} from 'semantic-ui-react';
+
+import {
+    NavLink,
+  } from "react-router-dom";
+
+import "./TopBar.css";
+
+import BitcloutBrideLogoMini from '../../logos/BitcloutBridgeLogoMini.png';
 
 class TopBar extends Component{
 
@@ -14,13 +22,22 @@ class TopBar extends Component{
         var networkMessage = this.props.network === 42 ? "Kovan Network" : (this.props.network === 0) ? "" : "Change Network to Kovan Testnet";
 
         return(
-            <Menu borderless fixed='top' size='massive'>
-                <Menu.Menu position='right'>
-                    <Menu.Item><Header>{networkMessage}</Header></Menu.Item>
-                    <Menu.Item ><Button size='small' onClick = {this.props.login}>{this.props.cloutAccount}</Button></Menu.Item>
-                    <Menu.Item ><Button size='small' title={this.props.ethAccount} onClick={this.props.updateWeb3}>{this.props.ethAccount}</Button></Menu.Item>
-                </Menu.Menu>
-            </Menu>
+            <div>
+                <Menu borderless size='massive'>
+                    <Menu.Menu position='left'>
+                        <Menu.Item icon='sidebar'onClick = {this.props.toggleSideBar}></Menu.Item>
+                        
+                        <Menu.Item ><NavLink to = "/"><Header>Clout Bridge</Header></NavLink></Menu.Item>
+                    </Menu.Menu>
+                    <Menu.Menu position='right'>
+                        <Menu.Item><Header>{networkMessage}</Header></Menu.Item>
+                        <Menu.Item ><Button size='small' onClick = {this.props.login}><div id="OverflowBtn">{this.props.cloutAccount}</div></Button></Menu.Item>
+                        <Menu.Item ><Button size='small' title={this.props.ethAccount} onClick={this.props.updateWeb3}><div id="OverflowBtn">{this.props.ethAccount}</div></Button></Menu.Item>
+                    </Menu.Menu>
+                    
+                </Menu>
+                
+            </div>
         );
     }
 }

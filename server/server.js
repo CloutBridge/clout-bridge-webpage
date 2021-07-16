@@ -2,7 +2,11 @@ const express = require('express');
 
 const axios = require('axios');
 
+var cors = require('cors');
+
 const app = express();
+app.use(cors());
+
 const port = 3001;
 
 var axiosInstance = axios.create({
@@ -112,5 +116,5 @@ app.get('/api/sendTransaction', async (req, res) =>{
 })
 
 app.listen(port, ()=>{
-    console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Clout Bridge Proxy listening at http://localhost:${port}`)
 })

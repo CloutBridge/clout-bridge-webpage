@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="95"
+   height="75"
+   viewBox="0 0 25.135416 19.84375"
+   version="1.1"
+   id="svg2030"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="BitcloutBridgeIcon.svg"
+   inkscape:export-filename="E:\bitclout-bridge-webpage\src\icons\BitcloutBridgeIcon.png"
+   inkscape:export-xdpi="48.4557"
+   inkscape:export-ydpi="48.4557">
+  <defs
+     id="defs2024" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="1.1418035"
+     inkscape:cy="67.169357"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g2618"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1858"
+     inkscape:window-height="1057"
+     inkscape:window-x="54"
+     inkscape:window-y="2"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata2027">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g2618"
+       transform="translate(0.16383568,0.18622395)">
+      <g
+         id="g854"
+         transform="matrix(0.64100152,0,0,0.64100152,1.8955949,0.99006693)">
+        <path
+           id="rect2595"
+           style="opacity:0.997;fill:#000000;fill-rule:evenodd;stroke-width:0.656022;stroke-linejoin:round"
+           d="m 8.7776524,13.134546 c 5.2983506,-3.3954275 10.4223006,-3.3028615 15.3857366,0 0.275157,0.183101 0.59659,0.266079 0.59659,0.59659 0,0.330511 -0.304916,0.752037 -0.59659,0.59659 -4.892962,-2.607697 -9.990857,-2.751593 -15.3857366,0 -0.294426,0.150168 -0.596589,-0.266079 -0.596589,-0.59659 0,-0.330511 0.318317,-0.41826 0.596589,-0.59659 z"
+           sodipodi:nodetypes="sssssss" />
+        <path
+           sodipodi:type="star"
+           style="opacity:0.997;fill:#000000;fill-rule:evenodd;stroke-width:0.656022;stroke-linejoin:round"
+           id="path2598"
+           sodipodi:sides="3"
+           sodipodi:cx="7.4596677"
+           sodipodi:cy="14.673753"
+           sodipodi:r1="3.1836021"
+           sodipodi:r2="1.591801"
+           sodipodi:arg1="0.38416936"
+           sodipodi:arg2="1.4313669"
+           inkscape:flatsided="false"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="M 10.411217,15.866932 7.6808932,16.250106 4.9505691,16.63328 5.9838929,14.077163 7.0172167,11.521046 8.714217,13.693989 Z"
+           inkscape:transform-center-x="-0.2212256"
+           inkscape:transform-center-y="-0.59659063" />
+        <path
+           sodipodi:type="star"
+           style="opacity:0.997;fill:#000000;fill-rule:evenodd;stroke-width:0.656022;stroke-linejoin:round"
+           id="path2598-6"
+           sodipodi:sides="3"
+           sodipodi:cx="-25.327393"
+           sodipodi:cy="14.705154"
+           sodipodi:r1="3.1836021"
+           sodipodi:r2="1.5918009"
+           sodipodi:arg1="0.38416936"
+           sodipodi:arg2="1.4313669"
+           inkscape:flatsided="false"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="m -22.375843,15.898334 -2.730324,0.383174 -2.730324,0.383174 1.033324,-2.556117 1.033323,-2.556117 1.697001,2.172943 z"
+           inkscape:transform-center-x="0.22122471"
+           inkscape:transform-center-y="-0.59658982"
+           transform="scale(-1,1)" />
+      </g>
+    </g>
+  </g>
+</svg>

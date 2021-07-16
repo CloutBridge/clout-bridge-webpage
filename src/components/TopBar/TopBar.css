@@ -1,0 +1,6 @@
+#OverflowBtn{
+    width: 10vw;
+    flex: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

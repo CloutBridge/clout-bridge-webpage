@@ -28,6 +28,7 @@ class Bridge extends Component{
     }
 
     evaluateUserConnected = async () =>{
+        
         if(this.props.web3 !== null){
 
             //console.log("Web3 connected...");
@@ -298,12 +299,15 @@ class Bridge extends Component{
         var bridgeContent = this.bridgeComponent();
 
         return(
-            <Segment style={{ padding: '8em 0em' }}>
-                <Container>
-                    <Header size='large'> Bridge $CLOUT</Header>
-                    {bridgeContent}
-                </Container>
-            </Segment>
+            
+
+                <Segment style={{ padding: '8em 0em' }}>
+                    <Container>
+                        <Header size='large'> Bridge $CLOUT</Header>
+                        {bridgeContent}
+                    </Container>
+                </Segment>
+
         );
     }
 }
