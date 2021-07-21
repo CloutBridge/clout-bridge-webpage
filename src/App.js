@@ -18,9 +18,9 @@ import TopBar from "./components/TopBar/TopBar.js";
 
 import Main from "./components/Main/Main.js";
 
-import IdentityModule from "./IdentityModule.js";
-
 import { v4 as uuidv4 } from 'uuid';
+
+var IdentityModule =  require("./IdentityModule.js") ;
 
 const eccrypto = require("eccrypto");
 
@@ -50,7 +50,7 @@ class App extends Component {
   constructor(){
     super();
 
-    var prod = false;
+    var prod = true;
 
     this.state = {
       web3: null, accounts: null, iframe: null, selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, bitcloutBridge: null, 
