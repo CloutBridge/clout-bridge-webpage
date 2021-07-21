@@ -85,7 +85,7 @@ app.get('/api/getBalance', async (req, res) =>{
         console.log(error);
     }
 
-    //console.log(`${req.query.sender} Balance: ${balance}`);
+    console.log(`${req.query.sender} Balance: ${balance}`);
 
     res.send(JSON.stringify({balance: balance}));
 })
@@ -103,15 +103,33 @@ app.get('/api/sendTransaction', async (req, res) =>{
             }
         }
 
-        await axiosInstance.request(transactionOptions).then((result)=>{
+        var txnHashHex = await axiosInstance.request(transactionOptions).then((result)=>{
             console.log(result.data.TxnHashHex);
+            return result.data.TxnHashHex;
         })
         
+        res.send(JSON.stringify({txnHashHex:txnHashHex}))
         //console.log(transactionOptions)
 
     }catch(e){
         console.log("transaction Error prob repeat.");
     }
+
+})
+
+app.get('/api/exchangePrice', async (req, res) =>{
+    var priceOptions = {
+        url: 'https://api.bitclout.com/api/v0/get-exchange-rate',
+        method:'GET',
+        timeout: 10000
+    }
+
+    var exchangePrice = await axiosInstance.request(priceOptions).then((result)=>{
+        //console.log(result.data);
+        return result.data;
+    })
+
+    res.send(JSON.stringify(exchangePrice));
 
 })
 

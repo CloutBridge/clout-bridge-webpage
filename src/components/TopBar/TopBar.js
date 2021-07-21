@@ -10,12 +10,34 @@ import "./TopBar.css";
 
 import BitcloutBrideLogoMini from '../../logos/BitcloutBridgeLogoMini.png';
 
+const axios = require('axios');
+
 class TopBar extends Component{
+
+    state = {
+        exchangePrice: 0
+    }
 
     constructor(props){
         super();
         this.props = props;
+        setInterval(() => {
+            this.getPrice();
+        }, 20000)
     }
+
+    getPrice = async ()=>{
+
+        var price = await axios.get(`${this.props.environment}/api/exchangePrice`).then((result)=>{
+            //console.log(result.data.USDCentsPerBitCloutExchangeRate)
+            return result.data.USDCentsPerBitCloutExchangeRate;
+        })
+
+        //console.log(Number(price));
+        
+        this.setState({exchangePrice: Number(price) / 100});
+    }
+    
 
     render(){
 
@@ -30,9 +52,11 @@ class TopBar extends Component{
                         <Menu.Item ><NavLink to = "/"><Header>Clout Bridge</Header></NavLink></Menu.Item>
                     </Menu.Menu>
                     <Menu.Menu position='right'>
+                        <Menu.Item><Header size='tiny' color='grey'>$CLOUT Price: {this.state.exchangePrice}</Header></Menu.Item>
                         <Menu.Item><Header>{networkMessage}</Header></Menu.Item>
-                        <Menu.Item ><Button size='small' onClick = {this.props.login}><div id="OverflowBtn">{this.props.cloutAccount}</div></Button></Menu.Item>
+                        <Menu.Item ><Button size='small' onClick = {this.props.idModule.login}><div id="OverflowBtn">{this.props.cloutAccount}</div></Button></Menu.Item>
                         <Menu.Item ><Button size='small' title={this.props.ethAccount} onClick={this.props.updateWeb3}><div id="OverflowBtn">{this.props.ethAccount}</div></Button></Menu.Item>
+
                     </Menu.Menu>
                     
                 </Menu>

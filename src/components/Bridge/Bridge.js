@@ -1,30 +1,43 @@
 import React, { Component } from "react";
 import 'semantic-ui-css/semantic.min.css';
-import {Segment, Container, Header, Button, Dropdown, Input } from 'semantic-ui-react';
+import {Segment, Container, Header, Button, Dropdown, Input,Embed, Grid, SegmentGroup } from 'semantic-ui-react';
 import { v4 as uuidv4 } from 'uuid';
 
+import VideoLooper from 'react-video-looper'
+
+import demoVideo from '../../demo/CloutBridgeDemo.mp4';
+
+import bridgeIcon from "../../icons/CloutBridgeIcon.png"
+
+import bridgeLogo from "../../logos/CloutBridgeLogo.png"
+
 const axios = require('axios');
+
+var crypto = require("crypto");
 
 var mintFee = 10000;
 
 var burnFee = 5000;
 
+var lastTime = null;
+
 class Bridge extends Component{
 
     state = {connected: 0, connectedContent: <p>loading...</p>, mainContent: <p></p>,
-            sendButtonText: "Send", signedBridgeMessage: null,
-            lastTime: null, bitcloutBalance: null, ethereumCloutBalance: null, cloutInput: null, dropDownNetwork: null, transferError: null,
-            transferAmount: null
+            sendButtonText: "Send", 
+            bridgeUserButtonText: "Sign Bridge Message", disableBridgeUserButton: false,
+            bitcloutBalance: 0, ethereumCloutBalance: 0, cloutInput: null, dropDownNetwork: null, transferError: null,
+            transferAmount: 0,
         }
 
     constructor(props){
         super();
-        this.props = props;
+        this.props = props; 
 
         setInterval(() => {
             this.evaluateUserConnected();
             this.evaluateUserBridged();
-        }, 10000);
+        }, 1000);
     }
 
     evaluateUserConnected = async () =>{
@@ -63,7 +76,7 @@ class Bridge extends Component{
 
             if(userBridged){
                 // Transfer $Clout interface
-                this.setState({mainContent: await this.transferCloutComponent()})
+                this.setState({mainContent: await this.transferCloutComponent(), bridgeUserButtonText: "Sign Bridge Message", disableBridgeUserButton: false})
                 return;
             }
             // Bridge User interface.
@@ -86,45 +99,56 @@ class Bridge extends Component{
         var headerMessage, mainSegment, unbridge;
 
         if(bridgedAccountsCorrect){
-            headerMessage = <Header size='small'>{this.props.selectedUser} {'<->'} {this.props.accounts[0]}</Header>
+            headerMessage = 
+                <p>             
+                    <b>{this.props.selectedUser}</b> <img src={bridgeIcon}/> <b>{this.props.accounts[0]}</b>
+                </p>
 
             let currentTime = new Date().getTime() / 1000;
 
-            if(this.state.lastTime === null || (currentTime - this.state.lastTime) > 120){
-                //console.log(`currentTime ${currentTime} lastTime ${this.state.lastTime} elapsedTime: ${currentTime - this.state.lastTime}`);
-                let bitcloutBalance = await axios.get(`/api/getBalance?sender=${this.props.selectedUser}`).then((response)=>{
+            if(lastTime === null || (currentTime - lastTime) > 120){
+                console.log(`currentTime ${currentTime} lastTime ${this.state.lastTime} elapsedTime: ${currentTime - this.state.lastTime}`);
+                let bitcloutBalance = await axios.get(`${this.props.environment}/api/getBalance?sender=${this.props.selectedUser}`).then((response)=>{
                     //console.log(response)
                     return response.data.balance / 1000000000;
                 });
 
                 let ethereumCloutBalance = await this.props.bitcloutBridge.methods.balanceOf(this.props.accounts[0]).call() / 1000000000;
+
+                lastTime = currentTime;
                 
-                this.setState({lastTime: currentTime, bitcloutBalance: bitcloutBalance, ethereumCloutBalance: ethereumCloutBalance});
+                this.setState({bitcloutBalance: bitcloutBalance, ethereumCloutBalance: ethereumCloutBalance});
             }
             //console.log(bitcloutBalance);
+
+            try{
+                mainSegment = 
+                    <Segment.Group horizontal>
+                        <Segment></Segment>
+                        <Segment raised>
+                            <Header size="tiny"> Account Balances:</Header>
+                            <p>Bitclout Network Balance: {this.state.bitcloutBalance.toFixed(9)}</p>
+                            <p>Ethereum Network Balance: {this.state.ethereumCloutBalance.toFixed(9)}</p>
+                            <p>
+                            Transfering to:{' '}
+                            <Dropdown button inline selection placeholder={options[0]} options={options} onChange= {this.changeNetwork}/>
+                            Amount:{' '}
+                            <Input placeholder="$Clout..." onChange={this.changeInput}/>
+                            </p>
+                            <p>Bitclout to Ethereum Fee: {mintFee/1000000000} $Clout</p>
+                            <p>Ethereum to Bitclout Fee: {burnFee/1000000000} $Clout</p>
+                            <p>You will recieve: {this.state.transferAmount}</p>
+                            <p>{this.state.transferError}</p>
+                            <Button onClick={this.handleSend}>{this.state.sendButtonText}</Button>
+                            
+                        </Segment>
+                        <Segment></Segment>
+                    </Segment.Group>
+
+            }catch(err){
+                console.log(err)
+            }
             
-            mainSegment = 
-            <Segment.Group horizontal>
-                <Segment></Segment>
-                <Segment raised>
-                    <Header size="tiny"> Account Balances:</Header>
-                    <p>Bitclout Network Balance: {this.state.bitcloutBalance.toFixed(9)}</p>
-                    <p>Ethereum Network Balance: {this.state.ethereumCloutBalance.toFixed(9)}</p>
-                    <p>
-                    Transfering to:{' '}
-                    <Dropdown button inline selection placeholder={options[0]} options={options} onChange= {this.changeNetwork}/>
-                    Amount:{' '}
-                    <Input placeholder="$Clout..." onChange={this.changeInput}/>
-                    </p>
-                    <p>BitClout to Ethereum Fee: {mintFee/1000000000} $Clout</p>
-                    <p>Ethereum to Bitclout Fee: {burnFee/1000000000} $Clout</p>
-                    <p>You will recieve: {this.state.transferAmount}</p>
-                    <p>{this.state.transferError}</p>
-                    <Button onClick={this.handleSend}>{this.state.sendButtonText}</Button>
-                    
-                </Segment>
-                <Segment></Segment>
-             </Segment.Group>
 
             unbridge = <Button inverted secondary onClick={this.unbridgeUser}>Unbridge Account.</Button>
         }
@@ -178,10 +202,11 @@ class Bridge extends Component{
                     }
                     console.log("Trasfer to Ethereum")
                     try{
-                        var transactionHex = await axios.get(`/api/createTransaction?sender=${this.props.selectedUser}&amount=${clout}`).then((result)=>{
+                        var transactionHex = await axios.get(`${this.props.environment}/api/createTransaction?sender=${this.props.selectedUser}&amount=${clout}`).then((result)=>{
                             return result.data.transactionHex;
                         })
 
+                        /*
                         var signMessage = {
                             id: uuidv4(),
                             service: 'identity',
@@ -196,9 +221,11 @@ class Bridge extends Component{
 
                         console.log(JSON.stringify(signMessage))
 
-                        this.props.postMessage(signMessage);
+                        this.props.postMessage(signMessage);*/
 
-                        this.setState({transferError: "Sent $Clout to Ethereum Network! \n Wait for transaction to be added to bitclout blockchain for bridge to occur.", sendButtonText:"Send"});
+                        this.props.idModule.approve(transactionHex)
+
+                        this.setState({transferError: "Attemping to send $Clout to Ethereum Network. \n Wait for transaction to be added to bitclout blockchain for bridge to occur.", sendButtonText:"Send"});
 
                     }catch(error){
                         console.log("Bitclout transfer Error. \n" + error)
@@ -218,7 +245,6 @@ class Bridge extends Component{
                     console.log(`Ether burn fee: ${ethBurnFee}`);
                     await this.props.bitcloutBridge.methods.burn(clout).send({from: this.props.accounts[0], value: ethBurnFee})
                 }
-
             }
             else{
                 this.setState({transferError: "Set Network To Transfer $Clout to."});
@@ -232,17 +258,18 @@ class Bridge extends Component{
     handleRecieveText = async (cloutValue) =>{
 
         if(cloutValue !== "" && cloutValue !== null){
+            //console.log(cloutValue)
             if(isNaN(Number(cloutValue))){
                 this.setState({transferAmount: "NaN"});
                 return;
             }
             if(this.state.dropDownNetwork !== null && this.state.dropDownNetwork === "Ethereum"){
-                var transferAmount = ((cloutValue * 1000000000) - mintFee) / 100000000;
-                this.setState({transferAmount: transferAmount})
+                var transferAmount = ((cloutValue * 1000000000) - mintFee) / 1000000000;
+                this.setState({transferAmount: transferAmount > 0 ? transferAmount: 0})
             }
             if(this.state.dropDownNetwork !== null && this.state.dropDownNetwork === "Bitclout"){
-                var transferAmount = ((cloutValue * 1000000000) - burnFee) / 1000000000
-                this.setState({transferAmount: transferAmount})
+                var transferAmount = ((cloutValue * 1000000000) - burnFee) / 1000000000;
+                this.setState({transferAmount: transferAmount > 0 ? transferAmount: 0})
             }
         }
     }
@@ -260,54 +287,146 @@ class Bridge extends Component{
 
     unbridgeUser = async () =>{
         console.log("unbridging account");
+        try{
+            this.setState({disableBridgeUserButton: false, bridgeUserButtonText: this.props.signedBridgeMessage === null ?"Sign Bridge Message" : "Bridge User Accounts"});
+            await this.props.bitcloutBridge.methods.unbridgeUser().send({from: this.props.accounts[0]})
+        }
+        catch(err){
+            console.log("unbridge error")
+        }
 
-        await this.props.bitcloutBridge.methods.unbridgeUser().send({from: this.props.accounts[0]})
+        
     }
 
     bridgeUserComponent = async () =>{
 
         var bridgeFee = this.props.web3.utils.fromWei(await this.props.bitcloutBridge.methods.bridgeFee.call().call());
+
+        var btn = this.state.disableBridgeUserButton
+                    ? <Button disabled >{this.state.bridgeUserButtonText}</Button>
+                    : <Button onClick={this.handleBridgeRequest}>{this.state.bridgeUserButtonText}</Button>;
         
         let content = 
          <div>
             <Header size='medium'>Your bitclout address has not been bridged to the ethereum blockchain.</Header>
             <Header size='small'>Confirm you want to bridge the following addresses:</Header>
-            <p>{this.props.selectedUser} {'<->'} {this.props.accounts[0]}</p>
-            <Button onClick={this.props.handleBridgeRequest}>{this.props.bridgeUserButtonText}</Button>
+            <p>{this.props.selectedUser} <img src={bridgeIcon}/> {this.props.accounts[0]}</p>
+            {btn}
             <p>Bridge Fee: {bridgeFee} Ether</p>
         </div>
             
         return content;
     }
 
+    handleBridgeRequest = async () =>{
+
+        console.log("handle bridge request.")
+        if(this.props.signedBridgeMessage === null){
+            console.log("no signed message")
+            await this.signBridgeMessageRequest();
+            this.setState({bridgeUserButtonText : "Bridge User Accounts"})
+            return;
+        }
+    
+        var bridgeMessage = this.props.selectedUser + "<->" + this.props.accounts[0];
+    
+        var payload = {
+          message: bridgeMessage,
+          userSignature: Buffer.from(this.props.signedBridgeMessage, 'hex')
+        }
+    
+        //console.log(JSON.stringify(payload));
+    
+        //await this.testRequest(JSON.stringify(payload))
+
+        try{
+            this.setState({disableBridgeUserButton: true, bridgeUserButtonText: "Bridging Accounts, Please wait shortly."});
+            
+            var bridgeFee = await this.props.bitcloutBridge.methods.bridgeFee.call().call()
+    
+            var bridgeGas = await this.props.bitcloutBridge.methods.bridgeRequest(JSON.stringify(payload)).estimateGas({from: this.props.accounts[0], value: bridgeFee});
+        
+            console.log(`Bridge Gas : ${bridgeGas}, Bridge Fee: ${bridgeFee}`)
+    
+            var bridge = await this.props.bitcloutBridge.methods.bridgeRequest(JSON.stringify(payload)).send({from: this.props.accounts[0], value: bridgeFee});
+
+            console.log(bridge);
+
+        }catch(err){
+            console.log("error")
+            this.setState({disableBridgeUserButton: false, bridgeUserButtonText:"Bridge User Accounts"})
+        }
+      }
+
+    signBridgeMessageRequest = async () =>{
+
+        var bridgeMessage = this.props.selectedUser + "<->" + this.props.accounts[0];
+
+        console.log(bridgeMessage)
+    
+        var bridgeMessageHash = crypto.createHash("sha256").update(bridgeMessage).digest();
+    
+        console.log(bridgeMessageHash.toString('hex'));
+    
+        var newId = uuidv4();
+    
+        var message = {
+          id: newId,
+          service: 'identity',
+          method: 'burn',
+          payload: {
+            accessLevel: 4,
+            accessLevelHmac: this.props.accessLevelHmac,
+            encryptedSeedHex: this.props.encryptedSeedHex,
+            unsignedHashes: [ bridgeMessageHash ]
+          },
+        }
+    
+        this.props.idModule.postMessage(message);
+      }
+
     bridgeComponent(){
 
         let content = 
         
-            <Segment>
+            <div>
                 {this.state.connectedContent}
                 {this.state.mainContent}
-            </Segment>
+            </div>
         
         ;
         return content;
     }
 
+    embededComponent(){
+        let content = 
+            <div>
+                {/*<Embed id='_GoLWGzko8s' source='youtube' placeholder={bridgeLogo} ></Embed>*/}
+                <VideoLooper source={demoVideo} width='110%' height='67.5vh' start={0} end={100} loopCount={20}/>
+            </div>
+            ;
+        return content
+
+    }
 
     render(){
 
-        var bridgeContent = this.bridgeComponent();
+        var topMessage = <Header size='large'> Bridge $CLOUT</Header>
+        var mainContent = this.bridgeComponent();
+
+        if(this.props.prod){
+            console.log(`Bridge prod`);
+            mainContent = this.embededComponent();
+            topMessage = <Header size='large'>Bridge $CLOUT Demo</Header>
+        }
 
         return(
-            
-
-                <Segment style={{ padding: '8em 0em' }}>
-                    <Container>
-                        <Header size='large'> Bridge $CLOUT</Header>
-                        {bridgeContent}
-                    </Container>
-                </Segment>
-
+            <Segment style={{ padding: '8em 0em' }}>
+                <Container>
+                    {topMessage}
+                    {mainContent}
+                </Container>
+            </Segment>
         );
     }
 }
