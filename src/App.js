@@ -43,7 +43,7 @@ class App extends Component {
   constructor(){
     super();
 
-    var prod = false;
+    var prod = true;
 
     this.state = {
       web3: null, accounts: null, iframe: null, selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, bitcloutBridge: null, 
