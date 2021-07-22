@@ -402,11 +402,10 @@ class Bridge extends Component{
         let content = 
             <div>
                 {/*<Embed id='_GoLWGzko8s' source='youtube' placeholder={bridgeLogo} ></Embed>*/}
-                <VideoLooper source={demoVideo} width='110%' height='67.5vh' start={0} end={100} loopCount={20}/>
+                <VideoLooper source={demoVideo} width='110%' height='67.5vh' start={0} end={99} loopCount={20}/>
             </div>
             ;
         return content
-
     }
 
     render(){
