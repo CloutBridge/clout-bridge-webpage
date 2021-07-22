@@ -54,8 +54,8 @@ class TopBar extends Component{
                     <Menu.Menu position='right'>
                         <Menu.Item><Header size='tiny' color='grey'>$CLOUT Price: {this.state.exchangePrice}</Header></Menu.Item>
                         <Menu.Item><Header>{networkMessage}</Header></Menu.Item>
-                        <Menu.Item ><Button size='small' onClick = {this.props.idModule.login}><div id="OverflowBtn">{this.props.cloutAccount}</div></Button></Menu.Item>
-                        <Menu.Item ><Button size='small' title={this.props.ethAccount} onClick={this.props.updateWeb3}><div id="OverflowBtn">{this.props.ethAccount}</div></Button></Menu.Item>
+                        <Menu.Item ><Button primary size='small' onClick = {this.props.idModule.login}><div id="OverflowBtn">{this.props.cloutAccount}</div></Button></Menu.Item>
+                        <Menu.Item ><Button primary size='small' title={this.props.ethAccount} onClick={this.props.updateWeb3}><div id="OverflowBtn">{this.props.ethAccount}</div></Button></Menu.Item>
 
                     </Menu.Menu>
                     

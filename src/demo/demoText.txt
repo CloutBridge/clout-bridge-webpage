@@ -1,11 +1,8 @@
-Video demonstrating bridging $CLOUT to and from an EVM network via Bitclout Bridge oracle.
+This video demonstrates a user bridging there $CLOUT to the Ethereum blockchain via Clout Bridge.
 
-Actions occurring are as follows:
-1. 0:00 User connects Metamask Account and signs into Bitclout Account.
-2. 0:16 User signs and sends bridge message on to EVM network.
-3. 0:46 Oracle creates bridge on EVM network.
-4. 1:18 User redirected to transfer page and requests transfer from Bitclout network to EVM network.
-5. 1:32 Waiting for Bitclout.....
-6. 13:23 Oracle mints users new coins onto EVM network upon confirmation on Bitclout network. 
-7. 15:10 User requests transfer from EVM network to Bitclout network.
-8. 15:30 Oracle burns EVM tokens and transfers $CLOUT to user on Bitclout Network.
+0:00 The user signs into their Metamask and Bitclout accounts.
+0:11 User signs bridge message and bridges accounts.
+0:53 User selects network and amount to send.
+1:05 User bridges $CLOUT to the Ethereum blockchain.
+1:20 One block confirmation is needed to bridge $CLOUT.
+1:30 $bCLOUT is received on the Ethereum blockchain.

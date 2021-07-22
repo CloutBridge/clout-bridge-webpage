@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import VideoLooper from 'react-video-looper'
 
-import demoVideo from '../../demo/CloutBridgeDemo.mp4';
+import demoVideo from '../../demo/CloutBridgeDemoBlue.mp4';
 
 import bridgeIcon from "../../icons/CloutBridgeIcon.png"
 
