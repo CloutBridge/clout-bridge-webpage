@@ -20,15 +20,8 @@ import Main from "./components/Main/Main.js";
 
 import { v4 as uuidv4 } from 'uuid';
 
-var IdentityModule =  require("./IdentityModule.js") ;
+import IdentityModule from './IdentityModule.js' ;
 
-const eccrypto = require("eccrypto");
-
-const bs58check = require("bs58check")
-
-var crypto = require("crypto");
-
-const axios = require('axios');
 
 //var init = false;
 //var iframe = null;
@@ -50,7 +43,7 @@ class App extends Component {
   constructor(){
     super();
 
-    var prod = true;
+    var prod = false;
 
     this.state = {
       web3: null, accounts: null, iframe: null, selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, bitcloutBridge: null, 

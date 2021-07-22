@@ -5,7 +5,7 @@ var app = null;
 
 const windowFeatures = 'location=yes,scrollbars=yes,status=yes, toolbar=no, width=800, height=1000, top=0, left=0';
 
-module.exports = class IdentityModule{
+export default class IdentityModule{
 
     constructor(app1){
 
