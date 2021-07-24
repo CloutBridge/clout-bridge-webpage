@@ -32,6 +32,7 @@ class Main extends Component{
     sidebarContent(){
         var content = 
         <div>
+            
             <Menu.Item>
                 <Grid columns={4}>
                     <Grid.Column></Grid.Column>
@@ -73,70 +74,74 @@ class Main extends Component{
 
         return (
             <div id="mainDiv">
-            <Sidebar.Pushable>
-                <Sidebar as={Menu}
-                    vertical 
-                    borderless 
-                    visible={this.props.visible} 
-                    animation='overlay'>
-                    
-                    <Menu.Item >
+                <Sidebar.Pushable>
+                    <Sidebar as={Menu}
+                        vertical 
+                        borderless 
+                        visible={this.props.visible} 
+                        animation='overlay'
+                        fixed='left'
+                        floated
+                        >
                         
-                    </Menu.Item>
+                        <Menu.Item >
+                            
+                        </Menu.Item>
 
-                    <Menu.Item >
+                        <Menu.Item >
+                            
+                        </Menu.Item>
                         
-                    </Menu.Item>
-                    
-                    <Menu.Item>
-                        <NavLink to = "/" >
-                            <Grid columns={4}>
-                                <Grid.Column></Grid.Column>
-                                <Grid.Column><Icon name='rocket' color='black'/></Grid.Column>
-                                <Grid.Column><Header >Launch</Header></Grid.Column>
-                                <Grid.Column></Grid.Column>
-                            </Grid>
-                        </NavLink>
-                    </Menu.Item>
-                    <Menu.Item >
-                        
-                    </Menu.Item>
-                    <Menu.Item>
-                        <NavLink to = "/bridge">
-                            <Grid columns={4}>
-                                <Grid.Column></Grid.Column>
-                                <Grid.Column><img src={bridgeIcon}/></Grid.Column>
-                                <Grid.Column><Header >Bridge</Header></Grid.Column>
-                                <Grid.Column></Grid.Column>
-                            </Grid>
-                        </NavLink>
-                    </Menu.Item>
-                    <Menu.Item >
-                        
-                    </Menu.Item>
+                        <Menu.Item>
+                            <NavLink to = "/" >
+                                <Grid columns={4}>
+                                    <Grid.Column></Grid.Column>
+                                    <Grid.Column><Icon name='rocket' color='black' size='large'/></Grid.Column>
+                                    <Grid.Column><Header >Launch</Header></Grid.Column>
+                                    <Grid.Column></Grid.Column>
+                                </Grid>
+                            </NavLink>
+                        </Menu.Item>
+                        <Menu.Item >
+                            
+                        </Menu.Item>
 
-                    {sidebarContent}
+                        <Menu.Item>
+                            <NavLink to = "/bridge">
+                                <Grid columns={4}>
+                                    <Grid.Column></Grid.Column>
+                                    <Grid.Column><img src={bridgeIcon}/></Grid.Column>
+                                    <Grid.Column><Header >Bridge</Header></Grid.Column>
+                                    <Grid.Column></Grid.Column>
+                                </Grid>
+                            </NavLink>
+                        </Menu.Item>
+                        <Menu.Item >
+                            
+                        </Menu.Item>
 
-                    <Menu.Item >
-                        <a href="https://clout-bridge.gitbook.io/clout-bridge/"target="_blank">
-                            <Grid columns={4}>
-                                <Grid.Column></Grid.Column>
-                                <Grid.Column><Icon name='book' color='black'/></Grid.Column>
-                                <Grid.Column><Header>Docs</Header></Grid.Column>
-                                <Grid.Column></Grid.Column>
-                            </Grid>
-                        </a>
-                    </Menu.Item>
-                    
-                </Sidebar>
-                <Sidebar.Pusher>
-                    <HashRouter>
-                        <Route exact path='/bridge' render = {(routeProps) => (<Bridge handleBridgeRequest = {this.props.handleBridgeRequest} postMessage = {this.props.postMessage} idModule={this.props.idModule}{...routeProps} {...this.props}/>)}/>
-                        <Route exact path= '/' render ={(routeProps) => (<LaunchPage {...routeProps}/>)}/>
-                    </HashRouter>
-                    
-                </Sidebar.Pusher>
-            </Sidebar.Pushable>
+                        {sidebarContent}
+
+                        <Menu.Item >
+                            <a href="https://clout-bridge.gitbook.io/clout-bridge/"target="_blank">
+                                <Grid columns={4}>
+                                    <Grid.Column></Grid.Column>
+                                    <Grid.Column><Icon name='book' color='black' size='large'/></Grid.Column>
+                                    <Grid.Column><Header>Docs</Header></Grid.Column>
+                                    <Grid.Column></Grid.Column>
+                                </Grid>
+                            </a>
+                        </Menu.Item>
+                        
+                    </Sidebar>
+                    <Sidebar.Pusher>
+                        <HashRouter>
+                            <Route exact path='/bridge' render = {(routeProps) => (<Bridge handleBridgeRequest = {this.props.handleBridgeRequest} postMessage = {this.props.postMessage} idModule={this.props.idModule}{...routeProps} {...this.props}/>)}/>
+                            <Route exact path= '/' render ={(routeProps) => (<LaunchPage {...routeProps}/>)}/>
+                        </HashRouter>
+                        
+                    </Sidebar.Pusher>
+                </Sidebar.Pushable>
             </div>
         );
     }

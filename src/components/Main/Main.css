@@ -8,6 +8,6 @@
 }
 
 #mainDiv{
-    height: 92vh;
+    min-height: 92vh;
     border: 1px black;
 }

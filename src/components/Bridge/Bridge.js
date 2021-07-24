@@ -9,7 +9,7 @@ import demoVideo from '../../demo/CloutBridgeDemoBlue.mp4';
 
 import bridgeIcon from "../../icons/CloutBridgeIcon.png"
 
-import bridgeLogo from "../../logos/CloutBridgeLogo.png"
+//import bridgeLogo from "../../logos/CloutBridgeLogo.png"
 
 const axios = require('axios');
 
@@ -28,6 +28,7 @@ class Bridge extends Component{
             bridgeUserButtonText: "Sign Bridge Message", disableBridgeUserButton: false,
             bitcloutBalance: 0, ethereumCloutBalance: 0, cloutInput: null, dropDownNetwork: null, transferError: null,
             transferAmount: 0,
+            countdownDate: new Date("Aug 23, 2021 15:00:00").getTime(), countdownComponent: null
         }
 
     constructor(props){
@@ -37,7 +38,25 @@ class Bridge extends Component{
         setInterval(() => {
             this.evaluateUserConnected();
             this.evaluateUserBridged();
+            this.countdown();
         }, 1000);
+    }
+
+    countdown = async () =>{
+        var currentTime = new Date().getTime();
+        var distance = this.state.countdownDate - currentTime;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        var content = 
+            <Container>
+                <Header size='huge'>Countdown until Release!</Header>
+                <Header size='large'>{days}d {hours}h {minutes}m {seconds}s</Header>
+            </Container>
+        ;
+        this.setState({countdownComponent: content});
     }
 
     evaluateUserConnected = async () =>{
@@ -402,7 +421,7 @@ class Bridge extends Component{
         let content = 
             <div>
                 {/*<Embed id='_GoLWGzko8s' source='youtube' placeholder={bridgeLogo} ></Embed>*/}
-                <VideoLooper source={demoVideo} width='110%' height='67.5vh' start={0} end={99} loopCount={20}/>
+                {/*<VideoLooper source={demoVideo} width='110%' height='67.5vh' start={0} end={99} loopCount={20}/>*/}
             </div>
             ;
         return content
@@ -416,7 +435,7 @@ class Bridge extends Component{
         if(this.props.prod){
             console.log(`Bridge prod`);
             mainContent = this.embededComponent();
-            topMessage = <Header size='large'>Bridge $CLOUT Demo</Header>
+            topMessage = this.state.countdownComponent; //<Header size='large'>Bridge $CLOUT Demo</Header>
         }
 
         return(
