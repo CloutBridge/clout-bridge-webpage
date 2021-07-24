@@ -43,7 +43,7 @@ class TopBar extends Component{
 
         var networkMessage = this.props.network === 42 ? "Kovan Network" : (this.props.network === 0) ? "" : "Change Network to Kovan Testnet";
 
-        var prodMenu = this.props.prod ? <Menu.Menu position='right'></Menu.Menu> 
+        var prodMenu = this.props.prod ? <Menu.Menu position='right'><Menu.Item><Header size='tiny' color='grey'>$CLOUT Price: {this.state.exchangePrice}</Header></Menu.Item></Menu.Menu> 
                                        : <Menu.Menu position='right'>
                                             <Menu.Item><Header size='tiny' color='grey'>$CLOUT Price: {this.state.exchangePrice}</Header></Menu.Item>
                                             <Menu.Item><Header>{networkMessage}</Header></Menu.Item>
