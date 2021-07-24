@@ -132,7 +132,6 @@ class Main extends Component{
                                 </Grid>
                             </a>
                         </Menu.Item>
-                        
                     </Sidebar>
                     <Sidebar.Pusher>
                         <HashRouter>
