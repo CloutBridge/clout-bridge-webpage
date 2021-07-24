@@ -56,7 +56,7 @@ class LaunchPage extends Component{
                                         <List.Item></List.Item>
                                         <List.Item>
                                             <List.Icon name="ethereum"/>
-                                            <List.Content><b>To learn more about Clout Bridge and our vision read the <a href='https://clout-bridge.gitbook.io/clout-bridge/'>Docs</a>.</b></List.Content>
+                                            <List.Content><b>To learn more about CloutBridge and our vision read the <a href='https://clout-bridge.gitbook.io/clout-bridge/'>Docs</a>.</b></List.Content>
                                         </List.Item>
                                     </List>
                                 </Container>
