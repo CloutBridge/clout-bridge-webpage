@@ -2,3 +2,12 @@
     height: 100vh;
     border: solid 1px black;
 }
+
+#launchText{
+    
+    font-size: 48pt;
+}
+
+#launchCountdown{
+    font-size: 36pt;
+}

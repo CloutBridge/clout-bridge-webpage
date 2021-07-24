@@ -9,6 +9,8 @@ import demoVideo from '../../demo/CloutBridgeDemoBlue.mp4';
 
 import bridgeIcon from "../../icons/CloutBridgeIcon.png"
 
+import "./Bridge.css";
+
 //import bridgeLogo from "../../logos/CloutBridgeLogo.png"
 
 const axios = require('axios');
@@ -52,8 +54,8 @@ class Bridge extends Component{
 
         var content = 
             <Container>
-                <Header size='huge'>Countdown until Release!</Header>
-                <Header size='large'>{days}d {hours}h {minutes}m {seconds}s</Header>
+                <p id='launchText'>Launching In!</p>
+                <p id='launchCountdown'>{days}d {hours}h {minutes}m {seconds}s</p>
             </Container>
         ;
         this.setState({countdownComponent: content});
