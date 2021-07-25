@@ -1,7 +1,15 @@
+@font-face { font-family: Abel; 
+    src: url('../../fonts/Abel/Abel-Regular.ttf'); } 
+
 #smallSpace{
     height: 5vh;
 }
 
 #smallerSpace{
     height: 1vh;
+}
+
+
+p{
+    font-family: Abel;
 }

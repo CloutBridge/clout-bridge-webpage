@@ -6,7 +6,7 @@ import "./LaunchPage.css"
 
 //import CloutBridgeLogo from '../../logos/CloutBridgeLogoShorter.png';
 
-import CloutBridgeLogo from '../../logos/newLogo/mainLogoRevised2-2.png';
+import CloutBridgeLogo from '../../logos/newLogo/MainLogoBlackRevisedResize.png';
 
 import RoadMapImage from '../../logos/roadmap/RoadMap.jpg';
 
@@ -23,7 +23,7 @@ class LaunchPage extends Component{
 
     render(){
         return(
-            <Segment style={{overflow:'auto', maxHeight:"93.25vh"}}>
+            <Segment style={{overflow:'auto', maxHeight:"92.25vh"}}>
                 <Grid >
                     <Grid.Row >
                         <Grid.Column >
@@ -34,34 +34,34 @@ class LaunchPage extends Component{
                     <Divider />
                     <Grid.Row>
                         <Container text>
-                            <Header size='huge'>The Launch of CloutBridge is Near! </Header>
+                            <Header size='huge'><p id="releaseNear">The Release of CloutBridge is Near!</p> </Header>
                             <Container>
                                 <Container textAlign='left'>
                                     <List >
                                         <List.Item></List.Item>
                                         <List.Item>
                                             <List.Icon name="ethereum"/>
-                                            <List.Content><b>CloutBridge will allow Bitclout users to bridge their $CLOUT between Bitclout and Ethereum!</b></List.Content>
+                                            <List.Content size=''><Header size='small'><p><b>CloutBridge will allow Bitclout users to bridge their $CLOUT between Bitclout and Ethereum!</b></p></Header></List.Content>
                                         </List.Item>
                                         <List.Item></List.Item>
                                         <List.Item>
                                             <List.Icon name="ethereum"/>
-                                            <List.Content><b>Once bridged $bCLOUT tokens can be utilized as a 1:1 peg to $CLOUT.</b></List.Content>
+                                            <List.Content><Header size='small'><p><b>Once bridged $bCLOUT tokens can be utilized as a 1:1 peg to $CLOUT.</b></p></Header></List.Content>
                                         </List.Item> 
                                         <List.Item></List.Item>
                                         <List.Item>
                                             <List.Icon name="ethereum"/>
-                                            <List.Content><b>Bridged Clout will be utilized for a plethora decentralized applications including token swaps.</b></List.Content>
+                                            <List.Content><Header size='small'><p><b>Bridged Clout will be utilized for a plethora decentralized applications including token swaps.</b></p></Header></List.Content>
                                         </List.Item>
                                         <List.Item></List.Item>
                                         <List.Item>
                                             <List.Icon name="ethereum"/>
-                                            <List.Content><b>To learn more about CloutBridge and our vision read the <a href='https://clout-bridge.gitbook.io/clout-bridge/'>Docs</a>.</b></List.Content>
+                                            <List.Content><Header size='small'><p><b>To learn more about CloutBridge and our vision read the <a href='https://clout-bridge.gitbook.io/clout-bridge/'>Docs</a>.</b></p></Header></List.Content>
                                         </List.Item>
                                     </List>
                                 </Container>
                             </Container>
-                            <Header>Support CloutBridge by purchasing the creator coin <a href='https://bitclout.com/u/CloutBridge'>CloutBridge</a>.</Header>
+                            <Header size='large'><p>Support CloutBridge by purchasing the creator coin <a href='https://bitclout.com/u/CloutBridge'>CloutBridge</a>.</p></Header>
                             
                         </Container>
                     </Grid.Row>
@@ -69,7 +69,7 @@ class LaunchPage extends Component{
                     <div id='smallSpace'/>
                     <Grid.Row>
                         <Container>
-                            <Header>CloutBridge Demonstration Video</Header>
+                            <Header><p>CloutBridge Demonstration Video</p></Header>
                             <Embed id='A6S2NFHw-UI' source='youtube'  aspectRatio='21:9' autoplay active placeholder={CloutBridgeLogo}></Embed>
                         </Container>
                     </Grid.Row>

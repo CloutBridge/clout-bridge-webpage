@@ -13,7 +13,7 @@ import "./Main.css";
 
 import farm from "../../icons/FarmIcon.png";
 
-import bridgeIcon from "../../icons/CloutBridgeIcon.png";
+import bridgeIcon from "../../icons/CloutBridgeNewIcon.png";
 
 import { Route, HashRouter, NavLink } from "react-router-dom";
 
@@ -35,9 +35,9 @@ class Main extends Component{
             
             <Menu.Item>
                 <Grid columns={4}>
-                    <Grid.Column></Grid.Column>
                     <Grid.Column><img src={farm} id='farm'/></Grid.Column>
-                    <Grid.Column><Header >Farm</Header></Grid.Column>
+                    <Grid.Column><Header size='large'><p>Farm</p></Header></Grid.Column>
+                    <Grid.Column></Grid.Column>
                     <Grid.Column></Grid.Column>
                 </Grid>
             </Menu.Item>
@@ -46,9 +46,9 @@ class Main extends Component{
             </Menu.Item>
             <Menu.Item >
                 <Grid columns={4}>
-                    <Grid.Column></Grid.Column>
                     <Grid.Column><Icon name='arrows alternate horizontal' color='black'/></Grid.Column>
-                    <Grid.Column><Header >Swap</Header></Grid.Column>
+                    <Grid.Column><Header size='large'><p>Swap</p></Header></Grid.Column>
+                    <Grid.Column></Grid.Column>
                     <Grid.Column></Grid.Column>
                 </Grid>
             </Menu.Item>
@@ -95,9 +95,9 @@ class Main extends Component{
                         <Menu.Item>
                             <NavLink to = "/" >
                                 <Grid columns={4}>
-                                    <Grid.Column></Grid.Column>
                                     <Grid.Column><Icon name='rocket' color='black' size='large'/></Grid.Column>
-                                    <Grid.Column><Header >Launch</Header></Grid.Column>
+                                    <Grid.Column><Header size='large'><p>Launch</p></Header></Grid.Column>
+                                    <Grid.Column></Grid.Column>
                                     <Grid.Column></Grid.Column>
                                 </Grid>
                             </NavLink>
@@ -109,15 +109,12 @@ class Main extends Component{
                         <Menu.Item>
                             <NavLink to = "/bridge">
                                 <Grid columns={4}>
-                                    <Grid.Column></Grid.Column>
                                     <Grid.Column><img src={bridgeIcon}/></Grid.Column>
-                                    <Grid.Column><Header >Bridge</Header></Grid.Column>
+                                    <Grid.Column><Header size='large'><p>Bridge</p></Header></Grid.Column>
+                                    <Grid.Column></Grid.Column>
                                     <Grid.Column></Grid.Column>
                                 </Grid>
                             </NavLink>
-                        </Menu.Item>
-                        <Menu.Item >
-                            
                         </Menu.Item>
 
                         {sidebarContent}
@@ -125,9 +122,9 @@ class Main extends Component{
                         <Menu.Item >
                             <a href="https://clout-bridge.gitbook.io/clout-bridge/"target="_blank">
                                 <Grid columns={4}>
-                                    <Grid.Column></Grid.Column>
                                     <Grid.Column><Icon name='book' color='black' size='large'/></Grid.Column>
-                                    <Grid.Column><Header>Docs</Header></Grid.Column>
+                                    <Grid.Column><Header size='large'><p>Docs</p></Header></Grid.Column>
+                                    <Grid.Column></Grid.Column>
                                     <Grid.Column></Grid.Column>
                                 </Grid>
                             </a>

@@ -1,3 +1,6 @@
+@font-face { font-family: Abel; 
+    src: url('../../fonts/Abel/Abel-Regular.ttf'); } 
+
 #sideBar{
     margin-top: 6vh;
     border: 1px solid black;
@@ -7,7 +10,12 @@
 
 }
 
+
 #mainDiv{
-    min-height: 92vh;
+    flex: auto;
     border: 1px black;
+}
+
+p{
+ font-family: Abel;
 }

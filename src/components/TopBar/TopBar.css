@@ -1,6 +1,25 @@
+@font-face { font-family: Abel; 
+    src: url('../../fonts/Abel/Abel-Regular.ttf'); } 
+
 #OverflowBtn{
     width: 10vw;
     flex: auto;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+#cloutPrice, #cloutBridge {
+    font-family: Abel;
+}
+
+#cloutPrice{
+    font-size: x-large;
+}
+
+#cloutBridge{
+    font-size: xx-large;
+}
+
+
+
+
