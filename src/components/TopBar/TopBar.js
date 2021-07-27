@@ -10,6 +10,8 @@ import "./TopBar.css";
 
 import CloutBridgeIcon from "../../icons/CloutBridgeNewIconStretch.png";
 
+import CloutBridgeMainIcon from "../../logos/LogoSource/Revised/LogoTopbarIcon.svg";
+
 import { createMedia } from '@artsy/fresnel';
 
 const { MediaContextProvider, Media } = createMedia({
@@ -58,7 +60,7 @@ class TopBar extends Component{
 
         var prodMenu = this.props.prod ? <Menu.Menu position='right'>
                                             <Menu.Item></Menu.Item>
-                                            <Menu.Item> <Header size='tiny' color='grey'> <p id="cloutPrice">$CLOUT Price: ${this.state.exchangePrice}</p></Header></Menu.Item>
+                                            <Menu.Item> <Header size='tiny' color='grey'> <p id="cloutPrice">$CLOUT: ${this.state.exchangePrice}</p></Header></Menu.Item>
                                         </Menu.Menu> 
                                        : <Menu.Menu position='right'>
                                             <Menu.Item><Header size='tiny' color='grey'>$CLOUT: ${this.state.exchangePrice}</Header></Menu.Item>
@@ -74,8 +76,7 @@ class TopBar extends Component{
                     <Menu borderless size='massive'>
                         <Menu.Menu position='left'>
                             <Menu.Item icon='sidebar'onClick = {this.props.toggleSideBar}></Menu.Item>
-                            
-                            <Menu.Item ><NavLink to = "/"><Header><p id="cloutBridge">CloutBridge</p></Header></NavLink></Menu.Item>
+                            <Menu.Item ><NavLink to = "/"></NavLink></Menu.Item>
                         </Menu.Menu>
 
                         {prodMenu}

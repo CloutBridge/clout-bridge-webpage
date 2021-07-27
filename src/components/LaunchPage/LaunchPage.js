@@ -6,7 +6,9 @@ import "./LaunchPage.css"
 
 //import CloutBridgeLogo from '../../logos/CloutBridgeLogoShorter.png';
 
-import CloutBridgeLogo from '../../logos/LogoSource/CloutBridgeLogo.jpg';
+import CloutBridgeLogo from '../../logos/LogoSource/Revised/CloutBridgeLogo.jpg';
+
+import CloutBridgeLogo2 from '../../logos/LogoSource/Revised/Logo2StretchMain.png';
 
 import RoadMapImage from '../../logos/roadmap/RoadMap.jpg';
 
@@ -28,7 +30,7 @@ class LaunchPage extends Component{
                     <Grid.Row >
                         <Grid.Column >
                             <a id="goto"></a>
-                            <img src={CloutBridgeLogo} id="logoImage"/>
+                            <img src={CloutBridgeLogo2} id="logoImage"/>
                         </Grid.Column>
                     </Grid.Row>
                     <Divider />
