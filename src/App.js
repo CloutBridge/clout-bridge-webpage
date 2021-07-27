@@ -3,10 +3,7 @@ import './App.css';
 import React, { Component } from "react";
 import 'semantic-ui-css/semantic.min.css';
 
-import {Segment, SegmentGroup} from 'semantic-ui-react'
-
 import {
-  Route,
   HashRouter,
 } from "react-router-dom";
 
@@ -18,10 +15,17 @@ import TopBar from "./components/TopBar/TopBar.js";
 
 import Main from "./components/Main/Main.js";
 
-import { v4 as uuidv4 } from 'uuid';
-
 import IdentityModule from './IdentityModule.js' ;
 
+import { createMedia } from '@artsy/fresnel';
+
+const { MediaContextProvider, Media } = createMedia({
+  breakpoints: {
+    mobile: 0,
+    tablet: 768,
+    computer: 1024,
+  },
+})
 
 //var init = false;
 //var iframe = null;
@@ -140,7 +144,7 @@ class App extends Component {
 
   render(){
 
-    var ethAccount = this.state.accounts ?  this.state.accounts[0] : "Connect ETH Account";
+    var ethAccount = this.state.accounts ?  this.state.accounts[0] : "Connect Metamask";
 
     var cloutAccount = this.state.selectedUser ? this.state.selectedUser : "Bitclout Sign-In"; 
 

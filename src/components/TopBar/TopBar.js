@@ -8,6 +8,19 @@ import {
 
 import "./TopBar.css";
 
+import CloutBridgeIcon from "../../icons/CloutBridgeNewIconStretch.png";
+
+import { createMedia } from '@artsy/fresnel';
+
+const { MediaContextProvider, Media } = createMedia({
+    breakpoints: {
+      mobile: 0,
+      tablet: 768,
+      computer: 1024,
+    },
+  })
+
+
 //import BitcloutBrideLogoMini from '../../logos/BitcloutBridgeLogoMini.png';
 
 const axios = require('axios');
@@ -48,25 +61,40 @@ class TopBar extends Component{
                                             <Menu.Item> <Header size='tiny' color='grey'> <p id="cloutPrice">$CLOUT Price: ${this.state.exchangePrice}</p></Header></Menu.Item>
                                         </Menu.Menu> 
                                        : <Menu.Menu position='right'>
-                                            <Menu.Item><Header size='tiny' color='grey'>$CLOUT Price: {this.state.exchangePrice}</Header></Menu.Item>
+                                            <Menu.Item><Header size='tiny' color='grey'>$CLOUT: ${this.state.exchangePrice}</Header></Menu.Item>
                                             <Menu.Item><Header>{networkMessage}</Header></Menu.Item>
-                                            <Menu.Item ><Button primary size='small' onClick = {this.props.idModule.login}><div id="OverflowBtn">{this.props.cloutAccount}</div></Button></Menu.Item>
-                                            <Menu.Item ><Button primary size='small' title={this.props.ethAccount} onClick={this.props.updateWeb3}><div id="OverflowBtn">{this.props.ethAccount}</div></Button></Menu.Item>
+                                            <Menu.Item ><Button size='mini' secondary gimponClick = {this.props.idModule.login}><div id="OverflowBtn"><p>{this.props.cloutAccount}</p></div></Button></Menu.Item>
+                                            <Menu.Item ><Button size='mini' secondary title={this.props.ethAccount} onClick={this.props.updateWeb3}><div id="OverflowBtn"><p>{this.props.ethAccount}</p></div></Button></Menu.Item>
                                         </Menu.Menu>
+        
 
         return(
-            <div>
-                <Menu borderless size='massive'>
-                    <Menu.Menu position='left'>
-                        <Menu.Item icon='sidebar'onClick = {this.props.toggleSideBar}></Menu.Item>
-                        
-                        <Menu.Item ><NavLink to = "/"><Header><p id="cloutBridge">CloutBridge</p></Header></NavLink></Menu.Item>
-                    </Menu.Menu>
+            <MediaContextProvider>
+                <Media greaterThan='mobile'>
+                    <Menu borderless size='massive'>
+                        <Menu.Menu position='left'>
+                            <Menu.Item icon='sidebar'onClick = {this.props.toggleSideBar}></Menu.Item>
+                            
+                            <Menu.Item ><NavLink to = "/"><Header><p id="cloutBridge">CloutBridge</p></Header></NavLink></Menu.Item>
+                        </Menu.Menu>
 
-                    {prodMenu}
-                </Menu>
-                
-            </div>
+                        {prodMenu}
+                        <Menu.Menu>
+                            <Menu.Item></Menu.Item>
+                            <Menu.Item></Menu.Item>
+                        </Menu.Menu>
+                    </Menu>
+                </Media>
+                <Media at='mobile'>
+                    <Menu borderless size='small'>
+                        <Menu.Menu position='left'>
+                            <Menu.Item icon='sidebar'onClick = {this.props.toggleSideBar}></Menu.Item>
+                            <Menu.Item ><NavLink to = "/"><img src={CloutBridgeIcon}/></NavLink></Menu.Item>
+                        </Menu.Menu>
+                        <Menu.Item position='right'><Header size='tiny' color='grey'>$CLOUT: ${this.state.exchangePrice}</Header></Menu.Item>
+                    </Menu>
+                </Media>
+            </MediaContextProvider>
         );
     }
 }

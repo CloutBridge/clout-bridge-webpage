@@ -2,13 +2,13 @@
     src: url('../../fonts/Abel/Abel-Regular.ttf'); } 
 
 #OverflowBtn{
-    width: 10vw;
+    max-width: 10vw;
     flex: auto;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-#cloutPrice, #cloutBridge {
+p{
     font-family: Abel;
 }
 
