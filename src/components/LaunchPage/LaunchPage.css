@@ -5,10 +5,25 @@
     height: 5vh;
 }
 
+#smallSpace2{
+    height: 2vh;
+}
+
+#marginleft{
+    margin-left: 2vw;
+}
+
 #smallerSpace{
     height: 1vh;
 }
 
+#heading1{
+    font-size: xx-large;
+}
+
+#heading2{
+    font-size: x-large;
+}
 
 p{
     font-family: Abel;

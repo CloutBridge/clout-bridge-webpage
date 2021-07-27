@@ -33,14 +33,15 @@ class LaunchPage extends Component{
                     <Grid.Row>
                         <Grid.Column>
                             <Container text>
-                                <Header size='huge'><p id="releaseNear">The Release of CloutBridge is Near!</p> </Header>
                                 <Container>
+                                <p id="heading1">The Release of CloutBridge is Near!</p>
+                                    <div id="marginleft">
                                     <Container textAlign='left'>
-                                        <List >
+                                        <List>
                                             <List.Item></List.Item>
                                             <List.Item>
                                                 <List.Icon name="ethereum"/>
-                                                <List.Content size=''><Header size='small'><p><b>CloutBridge will allow Bitclout users to bridge their $CLOUT between Bitclout and Ethereum!</b></p></Header></List.Content>
+                                                <List.Content size=''><Header size='small'><p><b>CloutBridge allows Bitclout users to bridge their $CLOUT between Bitclout and Ethereum!</b></p></Header></List.Content>
                                             </List.Item>
                                             <List.Item></List.Item>
                                             <List.Item>
@@ -50,7 +51,7 @@ class LaunchPage extends Component{
                                             <List.Item></List.Item>
                                             <List.Item>
                                                 <List.Icon name="ethereum"/>
-                                                <List.Content><Header size='small'><p><b>Bridged Clout will be utilized for a variety of decentralized applications including token swaps.</b></p></Header></List.Content>
+                                                <List.Content><Header size='small'><p><b>Bridged Clout will be utilized for a variety of decentralized applications including Uniswap.</b></p></Header></List.Content>
                                             </List.Item>
                                             <List.Item></List.Item>
                                             <List.Item>
@@ -59,8 +60,10 @@ class LaunchPage extends Component{
                                             </List.Item>
                                         </List>
                                     </Container>
+                                    </div>
                                 </Container>
-                                <Header size='large'><p>Support CloutBridge by purchasing the creator coin <a href='https://bitclout.com/u/CloutBridge'>CloutBridge</a>.</p></Header>
+                                <div id='smallSpace'/>
+                                <p id="heading1">Support CloutBridge by purchasing the creator coin <a href='https://bitclout.com/u/CloutBridge'>CloutBridge</a>.</p>
                             </Container>
                         </Grid.Column>
                     </Grid.Row>
@@ -69,7 +72,7 @@ class LaunchPage extends Component{
                     <Grid.Row textAlign='center'>
                         <Grid.Column>
                             <Container>
-                                <Header size='large'><p>CloutBridge Demonstration Video</p></Header>
+                                <p id="heading1">CloutBridge Demonstration Video</p>
                                 <Embed id='efaOS7gKvTQ' source='youtube'  aspectRatio='21:9' autoplay active placeholder={CloutBridgeLogo}></Embed>
                             </Container>
                         </Grid.Column>

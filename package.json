@@ -33,7 +33,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "nodemon -L ../cloutBridge-proxy-server/cloutBridgeProxyServer",
+    "server": "nodemon --watch ../cloutBridge-proxy-server -L ../cloutBridge-proxy-server/cloutBridgeProxyServer",
     "dev": "run-p server start"
   },
   "eslintConfig": {

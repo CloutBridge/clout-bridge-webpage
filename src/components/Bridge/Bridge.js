@@ -30,7 +30,7 @@ class Bridge extends Component{
             bridgeUserButtonText: "Sign Bridge Message", disableBridgeUserButton: false,
             bitcloutBalance: 0, ethereumCloutBalance: 0, cloutInput: null, dropDownNetwork: null, transferError: null,
             transferAmount: 0,
-            countdownDate: new Date("Aug 23, 2021 15:00:00").getTime(), countdownComponent: null
+            countdownDate: new Date("Aug 27, 2021 15:00:00").getTime(), countdownComponent: null
         }
 
     constructor(props){
@@ -54,7 +54,7 @@ class Bridge extends Component{
 
         var content = 
             <Container>
-                <p id='launchText'>Launching In!</p>
+                <p id='launchText'>Launching In...</p>
                 <p id='launchCountdown'>{days}d {hours}h {minutes}m {seconds}s</p>
             </Container>
         ;
