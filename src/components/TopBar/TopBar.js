@@ -8,9 +8,9 @@ import {
 
 import "./TopBar.css";
 
-import CloutBridgeIcon from "../../icons/CloutBridgeNewIconStretch.png";
+import CloutBridgeLogo from "../../logos/newLogo/black/MainLogoAbelTopbar.png";
 
-import CloutBridgeMainIcon from "../../logos/LogoSource/Revised/LogoTopbarIcon.svg";
+import CloutBridgeIcon from "../../icons/MainLogoAbelTopbarMobile.png";
 
 import { createMedia } from '@artsy/fresnel';
 
@@ -21,9 +21,6 @@ const { MediaContextProvider, Media } = createMedia({
       computer: 1024,
     },
   })
-
-
-//import BitcloutBrideLogoMini from '../../logos/BitcloutBridgeLogoMini.png';
 
 const axios = require('axios');
 
@@ -76,7 +73,7 @@ class TopBar extends Component{
                     <Menu borderless size='massive'>
                         <Menu.Menu position='left'>
                             <Menu.Item icon='sidebar'onClick = {this.props.toggleSideBar}></Menu.Item>
-                            <Menu.Item ><NavLink to = "/"></NavLink></Menu.Item>
+                            <Menu.Item ><NavLink to = "/"><img src={CloutBridgeLogo}/></NavLink></Menu.Item>
                         </Menu.Menu>
 
                         {prodMenu}

@@ -4,11 +4,7 @@ import {Segment, Container, Header,List, Embed, Icon, Menu, Grid,Divider} from '
 
 import "./LaunchPage.css"
 
-//import CloutBridgeLogo from '../../logos/CloutBridgeLogoShorter.png';
-
-import CloutBridgeLogo from '../../logos/LogoSource/Revised/CloutBridgeLogo.jpg';
-
-import CloutBridgeLogo2 from '../../logos/LogoSource/Revised/Logo2StretchMain.png';
+import CloutBridgeLogo from '../../logos/newLogo/black/MainLogoAbelResize.png'
 
 import RoadMapImage from '../../logos/roadmap/RoadMap.jpg';
 
@@ -30,7 +26,7 @@ class LaunchPage extends Component{
                     <Grid.Row >
                         <Grid.Column >
                             <a id="goto"></a>
-                            <img src={CloutBridgeLogo2} id="logoImage"/>
+                            <img src={CloutBridgeLogo} id="logoImage"/>
                         </Grid.Column>
                     </Grid.Row>
                     <Divider />
@@ -54,7 +50,7 @@ class LaunchPage extends Component{
                                             <List.Item></List.Item>
                                             <List.Item>
                                                 <List.Icon name="ethereum"/>
-                                                <List.Content><Header size='small'><p><b>Bridged Clout will be utilized for a plethora decentralized applications including token swaps.</b></p></Header></List.Content>
+                                                <List.Content><Header size='small'><p><b>Bridged Clout will be utilized for a variety of decentralized applications including token swaps.</b></p></Header></List.Content>
                                             </List.Item>
                                             <List.Item></List.Item>
                                             <List.Item>
@@ -73,8 +69,8 @@ class LaunchPage extends Component{
                     <Grid.Row textAlign='center'>
                         <Grid.Column>
                             <Container>
-                                <Header><p>CloutBridge Demonstration Video</p></Header>
-                                <Embed id='A6S2NFHw-UI' source='youtube'  aspectRatio='21:9' autoplay active placeholder={CloutBridgeLogo}></Embed>
+                                <Header size='large'><p>CloutBridge Demonstration Video</p></Header>
+                                <Embed id='efaOS7gKvTQ' source='youtube'  aspectRatio='21:9' autoplay active placeholder={CloutBridgeLogo}></Embed>
                             </Container>
                         </Grid.Column>
                     </Grid.Row>
