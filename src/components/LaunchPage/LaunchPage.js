@@ -72,7 +72,7 @@ class LaunchPage extends Component{
                     <Grid.Row textAlign='center'>
                         <Grid.Column>
                             <Container>
-                                <p id="heading1">Production Demonstration Video</p>
+                                <p id="heading1">Product Demonstration Video</p>
                                 <Embed id='efaOS7gKvTQ' source='youtube'  aspectRatio='21:9' autoplay active placeholder={CloutBridgeLogo}></Embed>
                             </Container>
                         </Grid.Column>
