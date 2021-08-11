@@ -29,7 +29,7 @@ export default class IdentityModule{
     }
 
     login() {
-        console.log("ID Object login")
+        //console.log("ID Object login")
         identityWindow = window.open('https://identity.bitclout.com/log-in?accessLevelRequest=4', null, windowFeatures);
     }
     
@@ -58,7 +58,6 @@ export default class IdentityModule{
                 //console.log(payload.signedTransactionHex)
                 this.sendTransaction(payload.signedTransactionHex);
             }
-
         });
     }
 

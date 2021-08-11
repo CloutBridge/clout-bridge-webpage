@@ -23,11 +23,27 @@ var burnFee = 5000;
 
 var lastTime = null;
 
+var gasPrices = {
+    low: 75000000000,
+    med: 150000000000,
+    high: 350000000000,
+    higher: 500000000000,
+    extreme: 1000000000000,
+    unbearable: 10000000000000
+};
+
+var gas ={
+    bridge: 117404,
+    mint: 80032
+}
+
+
 class Bridge extends Component{
 
     state = {connected: 0, connectedContent: <p>loading...</p>, mainContent: <p></p>,
             sendButtonText: "Send", 
             bridgeUserButtonText: "Sign Bridge Message", disableBridgeUserButton: false,
+            bcltAddressBridged: false, ethAddressBridged: false,
             bitcloutBalance: 0, ethereumCloutBalance: 0, cloutInput: null, dropDownNetwork: null, transferError: null,
             transferAmount: 0,
             countdownDate: new Date("Aug 27, 2021 15:00:00").getTime(), countdownComponent: null
@@ -68,8 +84,8 @@ class Bridge extends Component{
             //console.log("Web3 connected...");
             //console.log(` Eth account: ${this.props.accounts[0]}`)
 
-            if(this.props.network !== 42){
-                this.setState({connectedContent: <p>Switch Network to Kovan</p>, connected:0})
+            if(this.props.network !== 5){
+                this.setState({connectedContent: <p>Switch Network to Goerli</p>, connected:0})
                 return;
             }
             else if(this.props.selectedUser !== null){
@@ -92,10 +108,15 @@ class Bridge extends Component{
     evaluateUserBridged = async () =>{
 
         if(this.props.web3 !== null && this.state.connected){
-            var userBridged = await this.props.bitcloutBridge.methods.userBridged(this.props.selectedUser).call();
-            //console.log(`   ${this.props.selectedUser} Bridged: ${userBridged}`);
+            var bcltAddressBridged = await this.props.bitcloutBridge.methods.userBridged(this.props.selectedUser).call();
 
-            if(userBridged){
+            var ethAddressBridged = await this.props.bitcloutBridge.methods.userBridged().call({from:this.props.accounts[0]});
+
+            this.setState({bcltAddressBridged: bcltAddressBridged, ethAddressBridged: ethAddressBridged});
+
+            //console.log(`   ${this.props.selectedUser} Bridged: ${userBridgedB} ${userBridgeA}`);
+
+            if(bcltAddressBridged && ethAddressBridged){
                 // Transfer $Clout interface
                 this.setState({mainContent: await this.transferCloutComponent(), bridgeUserButtonText: "Sign Bridge Message", disableBridgeUserButton: false})
                 return;
@@ -316,27 +337,46 @@ class Bridge extends Component{
             console.log("unbridge error")
         }
 
-        
     }
 
     bridgeUserComponent = async () =>{
 
-        var bridgeFee = this.props.web3.utils.fromWei(await this.props.bitcloutBridge.methods.bridgeFee.call().call());
-
-        var btn = this.state.disableBridgeUserButton
-                    ? <Button disabled >{this.state.bridgeUserButtonText}</Button>
-                    : <Button onClick={this.handleBridgeRequest}>{this.state.bridgeUserButtonText}</Button>;
-        
-        let content = 
-         <div>
-            <Header size='medium'>Your bitclout address has not been bridged to the ethereum blockchain.</Header>
-            <Header size='small'>Confirm you want to bridge the following addresses:</Header>
-            <p>{this.props.selectedUser} <img src={bridgeIcon}/> {this.props.accounts[0]}</p>
-            {btn}
-            <p>Bridge Fee: {bridgeFee} Ether</p>
-        </div>
+        if(this.state.ethAddressBridged && this.state.bcltAddressBridged){
+            var bridgeFee = await this.calculateBridgeFee();
             
-        return content;
+            var btn = this.state.disableBridgeUserButton
+                        ? <Button disabled >{this.state.bridgeUserButtonText}</Button>
+                        : <Button onClick={this.handleBridgeRequest}>{this.state.bridgeUserButtonText}</Button>;
+            
+            let content = 
+            <div>
+                <Header size='medium'>Your bitclout address has not been bridged to the ethereum blockchain.</Header>
+                <Header size='small'>Confirm you want to bridge the following addresses:</Header>
+                <p>{this.props.selectedUser} <img src={bridgeIcon}/> {this.props.accounts[0]}</p>
+                {btn}
+                <p>Bridge Fee: {bridgeFee} Ether</p>
+            </div>
+                
+            return content;
+
+        }
+        
+    }
+
+    calculateBridgeFee = async () =>{
+
+        var currentGasPrice = await this.props.web3.eth.getGasPrice();
+
+        var currentFeeLevel = currentGasPrice <= gasPrices.low   ? "low" : 
+                             (currentGasPrice <= gasPrices.med)  ? "med" : 
+                             (currentGasPrice <= gasPrices.high) ? "high": 
+                           (currentGasPrice <= gasPrices.higher) ? "higher" :
+                           (currentGasPrice <= gasPrices.extreme)? "extreme": "unbearable";
+
+        //console.log(gas.bridge * gasPrices[currentFeeLevel]);
+
+
+        return this.props.web3.utils.fromWei((gas.bridge * gasPrices[currentFeeLevel]).toString(), 'ether');
     }
 
     handleBridgeRequest = async () =>{
@@ -431,7 +471,7 @@ class Bridge extends Component{
 
     render(){
 
-        var topMessage = <Header size='large'> Bridge $CLOUT</Header>
+        var topMessage = <p id="bridgeHeader"> Bridge CLOUT</p>
         var mainContent = this.bridgeComponent();
 
         if(this.props.prod){
@@ -441,10 +481,13 @@ class Bridge extends Component{
         }
 
         return(
+
             <Segment style={{ padding: '8em 0em' }}>
                 <Container>
-                    {topMessage}
-                    {mainContent}
+                    <Segment style={{ padding: '8em 0em' }}>
+                        {topMessage}
+                        {mainContent}
+                    </Segment>
                 </Container>
             </Segment>
         );

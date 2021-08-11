@@ -59,11 +59,9 @@ class Main extends Component{
         </div>
 
         if(this.props.prod || !this.props.prod){
-            console.log("sidbar prod")
+            //console.log("sidbar prod")
             content = <div></div>;
         }
-
-
 
         return content;
     }
@@ -102,9 +100,7 @@ class Main extends Component{
                                 </Grid>
                             </NavLink>
                         </Menu.Item>
-                        <Menu.Item >
-                            
-                        </Menu.Item>
+
 
                         <Menu.Item>
                             <NavLink to = "/bridge">

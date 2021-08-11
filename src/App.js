@@ -52,7 +52,7 @@ class App extends Component {
     this.state = {
       web3: null, accounts: null, iframe: null, selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, bitcloutBridge: null, 
       bridgeUserButtonText: "Sign Bridge Message.", signedBridgeMessage: null,
-      network: 0, environment: prod ? "https://ratiomaster.site" : "http://localhost:3001", prod: prod,
+      network: 0, environment: prod ? "http://ratiomaster.site" : "http://localhost:3001", prod: prod,
       toggleSideBar: false};
 
     console.log(`env: ${this.state.environment} prod: ${this.state.prod}`)
@@ -119,7 +119,7 @@ class App extends Component {
         params: networkData,
       });*/
 
-      const bitcloutBridge = new web3.eth.Contract(bitcloutBridgeContract.abi, '0xCD7Dc65fE9d00A6c0AA2F2c7bCCF9DFc6E8DEf91');
+      const bitcloutBridge = new web3.eth.Contract(bitcloutBridgeContract.abi, '0x0A357D1f102D96BB4c66e708CE598D8529EA6a05');
 
       this.setState({web3, accounts, bitcloutBridge, network});
 

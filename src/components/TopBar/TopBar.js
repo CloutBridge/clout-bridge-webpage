@@ -40,6 +40,7 @@ class TopBar extends Component{
 
     getPrice = async ()=>{
 
+        
         var price = await axios.get(`${this.props.environment}/api/exchangePrice`).then((result)=>{
             //console.log(result.data.USDCentsPerBitCloutExchangeRate)
             return result.data.USDCentsPerBitCloutExchangeRate;
@@ -48,12 +49,14 @@ class TopBar extends Component{
         //console.log(Number(price));
         
         this.setState({exchangePrice: Number(price) / 100});
+
+
     }
     
 
     render(){
 
-        var networkMessage = this.props.network === 42 ? "Kovan Network" : (this.props.network === 0) ? "" : "Change Network to Kovan Testnet";
+        var networkMessage = this.props.network === 5 ? "Goerli Network" : (this.props.network === 0) ? "" : "Change Network to Goerli Testnet";
 
         var prodMenu = this.props.prod ? <Menu.Menu position='right'>
                                             <Menu.Item></Menu.Item>
