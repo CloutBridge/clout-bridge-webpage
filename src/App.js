@@ -52,7 +52,7 @@ class App extends Component {
     this.state = {
       web3: null, accounts: null, iframe: null, selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, bitcloutBridge: null, 
       bridgeUserButtonText: "Sign Bridge Message.", signedBridgeMessage: null,
-      network: 0, environment: prod ? "http://ratiomaster.site" : "http://localhost:3001", prod: prod,
+      network: 0, environment: prod ? "https://ratiomaster.site" : "http://localhost:3001", prod: prod,
       toggleSideBar: false};
 
     console.log(`env: ${this.state.environment} prod: ${this.state.prod}`)
