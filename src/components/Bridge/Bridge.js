@@ -3,8 +3,6 @@ import 'semantic-ui-css/semantic.min.css';
 import {Segment, Container, Header, Button, Dropdown, Input,Embed, Grid, SegmentGroup } from 'semantic-ui-react';
 import { v4 as uuidv4 } from 'uuid';
 
-import VideoLooper from 'react-video-looper'
-
 import demoVideo from '../../demo/CloutBridgeDemoBlue.mp4';
 
 import bridgeIcon from "../../icons/CloutBridgeIcon.png"

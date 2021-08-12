@@ -24,6 +24,16 @@ const { MediaContextProvider, Media } = createMedia({
 
 const axios = require('axios');
 
+const instance = axios.create(
+    {
+            baseURL: "",
+            withCredentials: false,
+            headers: {
+              'Access-Control-Allow-Origin' : '*',
+              'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
+          }
+      })
+
 class TopBar extends Component{
 
     state = {
@@ -40,8 +50,7 @@ class TopBar extends Component{
 
     getPrice = async ()=>{
 
-        
-        var price = await axios.get(`${this.props.environment}/api/exchangePrice`).then((result)=>{
+        var price = await axios.get(`${this.props.environment}/api/request`).then((result)=>{
             //console.log(result.data.USDCentsPerBitCloutExchangeRate)
             return result.data.USDCentsPerBitCloutExchangeRate;
         })
@@ -49,7 +58,28 @@ class TopBar extends Component{
         //console.log(Number(price));
         
         this.setState({exchangePrice: Number(price) / 100});
+    }
 
+    request = async () =>{
+
+        console.log('request');
+        /*
+        axios.get(`${this.props.environment}/api/greeting?name=steve`).then((result) =>{
+            console.log(result.data)
+        })*/
+
+        /*
+        
+        axios.get(`${this.props.environment}/api/request`).then((result)=>{
+            console.log(result.data);
+
+        })*/
+        var price = await  axios.get(`${this.props.environment}/api/request`).then((result)=>{
+            console.log(result.data.USDCentsPerBitCloutExchangeRate)
+            return result.data.USDCentsPerBitCloutExchangeRate;
+        })
+
+        this.setState({exchangePrice: Number(price) / 100});
 
     }
     
