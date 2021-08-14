@@ -75,7 +75,7 @@ class TopBar extends Component{
 
         })*/
         var price = await  axios.get(`${this.props.environment}/api/request`).then((result)=>{
-            console.log(result.data.USDCentsPerBitCloutExchangeRate)
+            //console.log(result.data.USDCentsPerBitCloutExchangeRate)
             return result.data.USDCentsPerBitCloutExchangeRate;
         })
 

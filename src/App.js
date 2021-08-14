@@ -47,10 +47,10 @@ class App extends Component {
   constructor(){
     super();
 
-    var prod = true;
+    var prod = false;
 
     this.state = {
-      web3: null, accounts: null, iframe: null, selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, bitcloutBridge: null, 
+      web3: null, accounts: null, iframe: null, selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, contractInstance: null, 
       bridgeUserButtonText: "Sign Bridge Message.", signedBridgeMessage: null,
       network: 0, environment: prod ? "https://ratiomaster.site" : "http://localhost:3001", prod: prod,
       toggleSideBar: false};
@@ -67,7 +67,7 @@ class App extends Component {
 
     var visible = !this.state.toggleSideBar;
 
-    console.log("toggle sidebar ", visible);
+    //console.log("toggle sidebar ", visible);
 
     this.setState({toggleSideBar: visible})
 
@@ -119,9 +119,9 @@ class App extends Component {
         params: networkData,
       });*/
 
-      const bitcloutBridge = new web3.eth.Contract(bitcloutBridgeContract.abi, '0x0A357D1f102D96BB4c66e708CE598D8529EA6a05');
+      const contractInstance = new web3.eth.Contract(bitcloutBridgeContract.abi, '0xC2d043001a50F6C67bA91Ace6005d5F713503939');
 
-      this.setState({web3, accounts, bitcloutBridge, network});
+      this.setState({web3, accounts, contractInstance, network});
 
       //console.log("state" + this.state.network)
 
