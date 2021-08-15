@@ -584,6 +584,7 @@ class Bridge extends Component{
 
         var topMessage = this.state.bridgeTopMessage;
 
+        
         if(this.props.prod){
             console.log(`Bridge prod`);
             mainContent = this.embededComponent();
