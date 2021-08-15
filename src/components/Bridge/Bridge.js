@@ -586,9 +586,10 @@ class Bridge extends Component{
 
         
         if(this.props.prod){
-            console.log(`Bridge prod`);
+            //console.log(`Bridge prod`);
             mainContent = this.embededComponent();
             topMessage = this.state.countdownComponent; //<Header size='large'>Bridge $CLOUT Demo</Header>
+            transparencyComponent = <div></div>
         }
 
         return(
