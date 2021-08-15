@@ -19,6 +19,7 @@ var bitcloutTransferFee = 1000;
 
 var lastTime = null;
 
+
 var gasPrices = {
     low: 75000000000,
     med: 150000000000,
@@ -42,7 +43,7 @@ class Bridge extends Component{
     state = {connected: 0, connectedContent: <p>loading...</p>, mainContent: <p></p>,
             sendButtonText: "Send", 
             bridgeUserButtonText: "Sign Bridge Message", disableBridgeUserButton: false, disableRemoveMintRequest: false,
-            bcltAddressBridged: false, ethAddressBridged: false,
+            bcltAddressBridged: false, ethAddressBridged: false, accountsLinked: false,
             bitcloutBalance: 0, ethereumCloutBalance: 0, cloutInput: null, dropDownNetwork: null, transferError: null,
             transferAmount: 0,
             countdownDate: new Date("Aug 27, 2021 15:00:00").getTime(), countdownComponent: null,
@@ -60,9 +61,9 @@ class Bridge extends Component{
             await this.evaluateUserConnected();
             await this.evaluateUserBridged();
             await this.evaluateFees();
-            //await this.evaluateBridgeBalances();
+
             await this.countdown();
-        }, 1000);
+        }, 2000);
         
     }
 
@@ -118,11 +119,38 @@ class Bridge extends Component{
 
             var ethAddressBridged = await this.props.contractInstance.methods.userBridged().call({from:this.props.accounts[0]});
 
-            await this.setState({bcltAddressBridged: bcltAddressBridged, ethAddressBridged: ethAddressBridged});
+            var ethToBcltAddress = await this.props.contractInstance.methods.ethToBcltAddress().call({from: this.props.accounts[0]});
+
+            var accountsLinked = this.props.selectedUser == ethToBcltAddress ? true :  false;
+
+            await this.setState({bcltAddressBridged, ethAddressBridged, accountsLinked});
+
+            let currentTime = new Date().getTime() / 1000;
+
+            if(lastTime === null || (currentTime - lastTime) > 40){
+                 //console.log(`currentTime ${currentTime} lastTime ${this.state.lastTime} elapsedTime: ${currentTime - this.state.lastTime}`);
+                let bitcloutBalance = await axios.get(`${this.props.environment}/api/getBalance?sender=${this.props.selectedUser}`).then((response)=>{
+                    //console.log(response)
+                    return response.data.balance / 1000000000;
+                });
+
+                let ethereumCloutBalance = await this.props.contractInstance.methods.balanceOf(this.props.accounts[0]).call() / 1000000000;
+
+                var cloutBridgeBcltBalance = await axios.get(`${this.props.environment}/api/cloutBridgeBalance`).then((response)=>{
+                    //console.log(response.data);
+                    return response.data.cloutBridgeBalance / 1000000000;
+                })
+
+                var bridgedCloutTotalBalance = (await this.props.contractInstance.methods.totalSupply().call() / 1000000000).toFixed(9);
+
+                lastTime = currentTime;
+                
+                this.setState({bitcloutBalance, ethereumCloutBalance, cloutBridgeBcltBalance, bridgedCloutTotalBalance});
+            }
 
             //console.log(`   ${this.props.selectedUser} Bridged: bclt ${this.state.bcltAddressBridged} eth ${this.state.ethAddressBridged}`);
 
-            if(bcltAddressBridged && ethAddressBridged){
+            if(bcltAddressBridged && ethAddressBridged && accountsLinked){
                 // Transfer $Clout interface
                 this.setState({mainContent: await this.transferCloutComponent(), bridgeUserButtonText: "Sign Bridge Message", disableBridgeUserButton: false})
                 return;
@@ -151,30 +179,6 @@ class Bridge extends Component{
         }
     }
 
-    evaluateBridgeBalances = async () =>{
-
-
-        if(this.props.web3 !== null){
-            //console.log('get balances')
-
-            
-            var cloutBridgeBcltBalance = await axios.get(`${this.props.environment}/api/cloutBridgeBalance`).then((response)=>{
-                //console.log(response.data);
-                return response.data.cloutBridgeBalance / 1000000000
-            })
-
-            /*cloutBridgeBcltBalance = (cloutBridgeBcltBalance / 1000000000).toFixed(9);*/
-
-            var bridgedCloutTotalBalance = await this.props.contractInstance.methods.totalSupply().call();
-
-            bridgedCloutTotalBalance = (bridgedCloutTotalBalance / 1000000000).toFixed(9);
-
-            //cloutBridgeBcltBalance: cloutBridgeBcltBalance, 
-            await this.setState({bridgedCloutTotalBalance: bridgedCloutTotalBalance})
-            //console.log(bridgedCloutTotalBalance);
-        }
-        
-    } 
 
     transferCloutComponent = async () =>{
 
@@ -190,29 +194,6 @@ class Bridge extends Component{
                 <b>{this.props.selectedUser}</b> : <b>{this.props.accounts[0]}</b>
             </p>
 
-        let currentTime = new Date().getTime() / 1000;
-
-        if(lastTime === null || (currentTime - lastTime) > 120){
-            //console.log(`currentTime ${currentTime} lastTime ${this.state.lastTime} elapsedTime: ${currentTime - this.state.lastTime}`);
-            let bitcloutBalance = await axios.get(`${this.props.environment}/api/getBalance?sender=${this.props.selectedUser}`).then((response)=>{
-                //console.log(response)
-                return response.data.balance / 1000000000;
-            });
-
-            let ethereumCloutBalance = await this.props.contractInstance.methods.balanceOf(this.props.accounts[0]).call() / 1000000000;
-
-            var cloutBridgeBcltBalance = await axios.get(`${this.props.environment}/api/cloutBridgeBalance`).then((response)=>{
-                //console.log(response.data);
-                return response.data.cloutBridgeBalance / 1000000000;
-            })
-
-            var bridgedCloutTotalBalance = (await this.props.contractInstance.methods.totalSupply().call() / 1000000000).toFixed(9);
-
-            lastTime = currentTime;
-            //
-            
-            this.setState({bitcloutBalance: bitcloutBalance, ethereumCloutBalance: ethereumCloutBalance, cloutBridgeBcltBalance, bridgedCloutTotalBalance});
-        }
         //console.log(bitcloutBalance);
         try{
             var sendButton;
@@ -246,8 +227,8 @@ class Bridge extends Component{
                     <div id='transferSegment'>
                         <div id='bridgeUserText'>
                             <Header size="tiny"> Account Balances:</Header>
-                            <p>Bitclout Network Balance: {Number(this.state.bitcloutBalance).toFixed(9)}</p>
-                            <p>Ethereum Network Balance: {Number(this.state.ethereumCloutBalance).toFixed(9)}</p>
+                            <p>$CLOUT Balance: {Number(this.state.bitcloutBalance).toFixed(9)}</p>
+                            <p>$bCLOUT Balance: {Number(this.state.ethereumCloutBalance).toFixed(9)}</p>
                             <Divider></Divider>
                             <Header size="tiny"> Transfer</Header>
                             <p>
@@ -574,7 +555,8 @@ class Bridge extends Component{
         return content
     }
 
-    transparencyComponent(){
+    transparencyComponent (){
+
         let content = <Container textAlign='center'>
                             <div id='transparencyComponent'>
                                 <p id='transparencyHeader'>CloutBridge Network Balances</p>
@@ -582,8 +564,8 @@ class Bridge extends Component{
                                     <Grid columns={4}>
                                         <Grid.Row>
                                             <Grid.Column></Grid.Column>
-                                            <Grid.Column><p id='transparencyContent'>Bitclout - Clout: {this.state.cloutBridgeBcltBalance}</p> </Grid.Column>
-                                            <Grid.Column><p id='transparencyContent'>Ethereum - bClout: {this.state.bridgedCloutTotalBalance}</p></Grid.Column>
+                                            <Grid.Column><p id='transparencyContent'>Bitclout $CLOUT: {this.state.cloutBridgeBcltBalance}</p> </Grid.Column>
+                                            <Grid.Column><p id='transparencyContent'>Ethereum $bCLOUT: {this.state.bridgedCloutTotalBalance}</p></Grid.Column>
                                             <Grid.Column></Grid.Column>
                                         </Grid.Row>
                                     </Grid>
