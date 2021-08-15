@@ -50,7 +50,7 @@ class TopBar extends Component{
 
     getPrice = async ()=>{
 
-        var price = await axios.get(`${this.props.environment}/api/request`).then((result)=>{
+        var price = await axios.get(`${this.props.environment}/api/cloutPrice`).then((result)=>{
             //console.log(result.data.USDCentsPerBitCloutExchangeRate)
             return result.data.USDCentsPerBitCloutExchangeRate;
         })
@@ -60,29 +60,6 @@ class TopBar extends Component{
         this.setState({exchangePrice: Number(price) / 100});
     }
 
-    request = async () =>{
-
-        console.log('request');
-        /*
-        axios.get(`${this.props.environment}/api/greeting?name=steve`).then((result) =>{
-            console.log(result.data)
-        })*/
-
-        /*
-        
-        axios.get(`${this.props.environment}/api/request`).then((result)=>{
-            console.log(result.data);
-
-        })*/
-        var price = await  axios.get(`${this.props.environment}/api/request`).then((result)=>{
-            //console.log(result.data.USDCentsPerBitCloutExchangeRate)
-            return result.data.USDCentsPerBitCloutExchangeRate;
-        })
-
-        this.setState({exchangePrice: Number(price) / 100});
-
-    }
-    
 
     render(){
 
