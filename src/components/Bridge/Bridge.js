@@ -143,7 +143,7 @@ class Bridge extends Component{
 
                 var bridgedCloutTotalBalance = (await this.props.contractInstance.methods.totalSupply().call() / 1000000000).toFixed(9);
 
-                console.log(` bridgedCloutBalance`)
+                //console.log(` bridgedCloutBalance`)
 
                 lastTime = currentTime;
                 
