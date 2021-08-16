@@ -36,28 +36,35 @@ export default class IdentityModule{
     listen(){
         window.addEventListener('message', message => {
             //console.log('message: ');
-            console.log(message);
-        
-            const {data: {id: id, method: method, payload: payload}} = message;    
-        
-            //console.log(`Response Id: ${id} Method: ${method} \nPayload: ${payload}`);
-            
-            if (method == 'initialize') {
-                this.handleInit(message);
-            } else if (method == 'login') {
-                console.log(message);
-                this.handleLogin(payload);
-            }
+            //console.log(message);
 
-            if(payload !== undefined && payload.signedHashes !== undefined && payload.signedHashes.length === 1){
-                console.log("signed hash:" + payload.signedHashes);
-                app.updateSignedBridgeMessage(payload.signedHashes[0]);
-                //this.setState({signedBridgeMessage: payload.signedHashes[0]});
+            //console.log(`Message origin: ${message.origin}`);
+        
+            if(message.origin === "https://identity.bitclout.com"){
+                const {data: {id: id, method: method, payload: payload}} = message;    
+
+                console.log(message)
+        
+                //console.log(`Response Id: ${id} Method: ${method} \nPayload: ${payload}`);
+                
+                if (method == 'initialize') {
+                    this.handleInit(message);
+                } else if (method == 'login') {
+                    console.log(message);
+                    this.handleLogin(payload);
+                }
+
+                if(payload !== undefined && payload.signedHashes !== undefined && payload.signedHashes.length === 1){
+                    console.log("signed hash:" + payload.signedHashes);
+                    app.updateSignedBridgeMessage(payload.signedHashes[0]);
+                    //this.setState({signedBridgeMessage: payload.signedHashes[0]});
+                }
+                if(payload !== undefined && payload.signedTransactionHex !== undefined){
+                    //console.log(payload.signedTransactionHex)
+                    this.sendTransaction(payload.signedTransactionHex);
+                }
             }
-            if(payload !== undefined && payload.signedTransactionHex !== undefined){
-                //console.log(payload.signedTransactionHex)
-                this.sendTransaction(payload.signedTransactionHex);
-            }
+            
         });
     }
 
@@ -86,6 +93,7 @@ export default class IdentityModule{
 
     postMessage(e) {
         console.log(`init ${this.init} e:`, e);
+        console.log(this.iframe);
         this.init ? this.iframe.contentWindow.postMessage(e, "*") : this.pendingRequests.push(e)    
     }
 

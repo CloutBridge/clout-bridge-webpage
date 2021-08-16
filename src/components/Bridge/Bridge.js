@@ -511,7 +511,7 @@ class Bridge extends Component{
 
         var bridgeMessage = this.props.selectedUser + "<->" + this.props.accounts[0];
 
-        console.log(bridgeMessage)
+        //console.log(bridgeMessage);
     
         var bridgeMessageHash = crypto.createHash("sha256").update(bridgeMessage).digest();
     
