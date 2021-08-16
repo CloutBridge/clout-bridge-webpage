@@ -524,10 +524,10 @@ class Bridge extends Component{
           service: 'identity',
           method: 'burn',
           payload: {
-            accessLevel: 4,
+            accessLevel: '4',
             accessLevelHmac: this.props.accessLevelHmac,
             encryptedSeedHex: this.props.encryptedSeedHex,
-            unsignedHashes: [ bridgeMessageHash ]
+            unsignedHashes: [bridgeMessageHash]
           },
         }
     
