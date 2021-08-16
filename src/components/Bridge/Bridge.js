@@ -63,7 +63,7 @@ class Bridge extends Component{
             await this.evaluateFees();
 
             await this.countdown();
-        }, 2000);
+        }, 5000);
         
     }
 
@@ -113,8 +113,6 @@ class Bridge extends Component{
     }
 
     evaluateUserBridged = async () =>{
-
-        console.log("evaluate bridge")
 
         if(this.props.web3 !== null && this.state.connected){
             var bcltAddressBridged = await this.props.contractInstance.methods.userBridged(this.props.selectedUser).call();

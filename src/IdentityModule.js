@@ -50,7 +50,7 @@ export default class IdentityModule{
             }
 
             if(payload !== undefined && payload.signedHashes !== undefined && payload.signedHashes.length === 1){
-                //console.log("signed hash:" + payload.signedHashes);
+                console.log("signed hash:" + payload.signedHashes);
                 app.updateSignedBridgeMessage(payload.signedHashes[0]);
                 //this.setState({signedBridgeMessage: payload.signedHashes[0]});
             }
