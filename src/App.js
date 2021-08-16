@@ -84,6 +84,7 @@ class App extends Component {
 
   updateSignedBridgeMessage(message){
     this.setState({signedBridgeMessage:message});
+    console.log(this.state.signedBridgeMessage)
   }
 
   updateWeb3 = async () =>{

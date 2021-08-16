@@ -114,6 +114,8 @@ class Bridge extends Component{
 
     evaluateUserBridged = async () =>{
 
+        console.log("evaluate bridge")
+
         if(this.props.web3 !== null && this.state.connected){
             var bcltAddressBridged = await this.props.contractInstance.methods.userBridged(this.props.selectedUser).call();
 
@@ -142,6 +144,8 @@ class Bridge extends Component{
                 })
 
                 var bridgedCloutTotalBalance = (await this.props.contractInstance.methods.totalSupply().call() / 1000000000).toFixed(9);
+
+                console.log(` bridgedCloutBalance`)
 
                 lastTime = currentTime;
                 
