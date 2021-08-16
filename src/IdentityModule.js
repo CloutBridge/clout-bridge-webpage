@@ -36,7 +36,7 @@ export default class IdentityModule{
     listen(){
         window.addEventListener('message', message => {
             //console.log('message: ');
-            //console.log(message);
+            console.log(message);
         
             const {data: {id: id, method: method, payload: payload}} = message;    
         
@@ -85,7 +85,7 @@ export default class IdentityModule{
     }
 
     postMessage(e) {
-        console.log(e)
+        console.log(`init ${this.init} e:`, e);
         this.init ? this.iframe.contentWindow.postMessage(e, "*") : this.pendingRequests.push(e)    
     }
 
