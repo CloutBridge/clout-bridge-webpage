@@ -519,16 +519,30 @@ class Bridge extends Component{
     
         var newId = uuidv4();
     
+        /*
         var message = {
           id: newId,
           service: 'identity',
           method: 'burn',
           payload: {
-            accessLevel: '4',
+            accessLevel: 4,
             accessLevelHmac: this.props.accessLevelHmac,
             encryptedSeedHex: this.props.encryptedSeedHex,
             unsignedHashes: [bridgeMessageHash]
           },
+        }*/
+
+        var message ={
+            id: newId,
+            service: 'identity',
+            method: 'encrypt',
+            payload:{
+                accessLevel: 4,
+                recipientPublicKey: "BC1YLit7V8XL4xdAQH3HzsXZhSCcPioe3PGw5tB8h6EXqFwrppVAWHS",
+                accessLevelHmac: this.props.accessLevelHmac,
+                encryptedSeedHex: this.props.encryptedSeedHex,
+                message: "encrypt this"
+            }
         }
     
         this.props.idModule.postMessage(message);
