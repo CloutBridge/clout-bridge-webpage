@@ -519,7 +519,7 @@ class Bridge extends Component{
     
         var newId = uuidv4();
     
-        /*
+        
         var message = {
           id: newId,
           service: 'identity',
@@ -530,8 +530,9 @@ class Bridge extends Component{
             encryptedSeedHex: this.props.encryptedSeedHex,
             unsignedHashes: [bridgeMessageHash]
           },
-        }*/
+        }
 
+        /*
         var message ={
             id: newId,
             service: 'identity',
@@ -543,7 +544,7 @@ class Bridge extends Component{
                 encryptedSeedHex: this.props.encryptedSeedHex,
                 message: "encrypt this"
             }
-        }
+        }*/
     
         this.props.idModule.postMessage(message);
       }
