@@ -43,6 +43,7 @@ class TopBar extends Component{
     constructor(props){
         super();
         this.props = props;
+        this.getPrice();
         setInterval(() => {
             this.getPrice();
         }, 20000)

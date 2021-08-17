@@ -57,11 +57,15 @@ class Bridge extends Component{
         super();
         this.props = props; 
 
+        this.evaluateUserConnected();
+        this.evaluateUserBridged();
+        this.evaluateFees();
+        this.countdown();
+
         setInterval(async () => {
             await this.evaluateUserConnected();
             await this.evaluateUserBridged();
             await this.evaluateFees();
-
             await this.countdown();
         }, 5000);
         
