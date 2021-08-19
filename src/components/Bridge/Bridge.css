@@ -50,6 +50,11 @@
 }
 #userUnbridge, #userBridge{
     padding-top: 4vh;
+    font-size: 14pt;
+}
+#disclaimer{
+    padding-top: 2vh;
+    font-size: 14pt;
 }
 
 #spacer{
