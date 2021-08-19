@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import 'semantic-ui-css/semantic.min.css';
-import {Menu, Container, Button, Header} from 'semantic-ui-react';
+import {Menu, Button, Header} from 'semantic-ui-react';
 
 import {
     NavLink,
@@ -13,6 +13,7 @@ import CloutBridgeLogo from "../../logos/newLogo/black/MainLogoAbelTopbar.png";
 import CloutBridgeIcon from "../../icons/MainLogoAbelTopbarMobile.png";
 
 import { createMedia } from '@artsy/fresnel';
+import { thisTypeAnnotation } from "@babel/types";
 
 const { MediaContextProvider, Media } = createMedia({
     breakpoints: {
@@ -24,42 +25,52 @@ const { MediaContextProvider, Media } = createMedia({
 
 const axios = require('axios');
 
-const instance = axios.create(
-    {
-            baseURL: "",
-            withCredentials: false,
-            headers: {
-              'Access-Control-Allow-Origin' : '*',
-              'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',   
-          }
-      })
-
 class TopBar extends Component{
 
     state = {
-        exchangePrice: 0
+        exchangePrice: 0, selectedUserName: "Bitclout Sign-In", userRetrieved: false, barSelectedUser: null
     }
 
     constructor(props){
         super();
         this.props = props;
+        
+        /*
+        this.getPrice();
         setInterval(() => {
             this.getPrice();
-        }, 20000)
+        }, 20000)*/
     }
 
-    getPrice = async ()=>{
+    componentDidMount() {
+        this.evalutateState();
+        this.interval = setInterval( async() =>{
+            await this.evalutateState();
+        }, 5000);
+      }
+    
+      componentWillUnmount() {
+        clearInterval(this.interval);
+      }
 
-        var price = await axios.get(`${this.props.environment}/api/cloutPrice`).then((result)=>{
+    evalutateState = async () =>{
+
+        //console.log("evaluate state");
+
+        axios.get(`${this.props.environment}/api/cloutPrice`).then((result)=>{
             //console.log(result.data.USDCentsPerBitCloutExchangeRate)
-            return result.data.USDCentsPerBitCloutExchangeRate;
+            this.setState({exchangePrice: Number(result.data.USDCentsPerBitCloutExchangeRate) / 100});
         })
-
-        //console.log(Number(price));
         
-        this.setState({exchangePrice: Number(price) / 100});
+        if(this.props.selectedUser !== null){ 
+            axios.get(`${this.props.environment}/api/getUser?sender=${this.props.selectedUser}`).then((response) =>{
+                //console.log(response.data.username)
+                this.setState({selectedUserName: response.data.username});
+            })
+            return;
+        }
+        this.setState({selectedUserName:"Bitclout Sign-In"})
     }
-
 
     render(){
 
@@ -72,7 +83,7 @@ class TopBar extends Component{
                                        : <Menu.Menu position='right'>
                                             <Menu.Item><Header size='tiny' color='grey'>$CLOUT: ${this.state.exchangePrice}</Header></Menu.Item>
                                             <Menu.Item><Header>{networkMessage}</Header></Menu.Item>
-                                            <Menu.Item ><Button size='mini' secondary onClick = {this.props.idModule.login}><div id="OverflowBtn"><p>{this.props.cloutAccount}</p></div></Button></Menu.Item>
+                                            <Menu.Item ><Button size='mini' secondary onClick = {this.props.idModule.login}><div id="OverflowBtn"><p>{this.state.selectedUserName}</p></div></Button></Menu.Item>
                                             <Menu.Item ><Button size='mini' secondary title={this.props.ethAccount} onClick={this.props.updateWeb3}><div id="OverflowBtn"><p>{this.props.ethAccount}</p></div></Button></Menu.Item>
                                         </Menu.Menu>
         

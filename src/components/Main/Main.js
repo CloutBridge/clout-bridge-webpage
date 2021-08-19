@@ -128,7 +128,7 @@ class Main extends Component{
                     </Sidebar>
                     <Sidebar.Pusher>
                         <HashRouter>
-                            <Route exact path='/bridge' render = {(routeProps) => (<Bridge handleBridgeRequest = {this.props.handleBridgeRequest} postMessage = {this.props.postMessage} idModule={this.props.idModule}{...routeProps} {...this.props}/>)}/>
+                            <Route exact path='/bridge' render = {(routeProps) => (<Bridge handleBridgeRequest = {this.props.handleBridgeRequest} idModule={this.props.idModule}{...routeProps} {...this.props}/>)}/>
                             <Route exact path= '/' render ={(routeProps) => (<LaunchPage {...routeProps}/>)}/>
                         </HashRouter>
                     </Sidebar.Pusher>

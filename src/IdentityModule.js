@@ -43,19 +43,19 @@ export default class IdentityModule{
             if(message.origin === "https://identity.bitclout.com"){
                 const {data: {id: id, method: method, payload: payload}} = message;    
 
-                console.log(message)
+                //console.log(message)
         
                 //console.log(`Response Id: ${id} Method: ${method} \nPayload: ${payload}`);
                 
                 if (method == 'initialize') {
                     this.handleInit(message);
                 } else if (method == 'login') {
-                    console.log(message);
+                    //console.log(message);
                     this.handleLogin(payload);
                 }
 
                 if(payload !== undefined && payload.signedHashes !== undefined && payload.signedHashes.length === 1){
-                    console.log("signed hash:" + payload.signedHashes);
+                    //console.log("signed hash:" + payload.signedHashes);
                     app.updateSignedBridgeMessage(payload.signedHashes[0]);
                     //this.setState({signedBridgeMessage: payload.signedHashes[0]});
                 }
@@ -92,14 +92,13 @@ export default class IdentityModule{
     }
 
     postMessage(e) {
-        console.log(`init ${this.init} e:`, e);
-        console.log(this.iframe);
+        //console.log(`init ${this.init} e:`, e);
+        //console.log(this.iframe);
         this.init ? this.iframe.contentWindow.postMessage(e, "*") : this.pendingRequests.push(e)    
     }
 
     handleLogin(payload) {
         //console.log("users:" + JSON.stringify(payload.users));
-
         
         this.selectedUser = payload.publicKeyAdded;
         this.users = payload.users;
@@ -125,10 +124,8 @@ export default class IdentityModule{
 
     sendTransaction = async (signedTransactionHex) =>{
         //console.log(`Sending signedTransactionHex: ${signedTransactionHex}`);
-        //.log(app.getEnvironment())
-        
         await axios.get(`${app.getEnvironment()}/api/sendTransaction?signedTransactionHex=${signedTransactionHex}`).then((result)=>{
-          console.log(result.data);
+          //console.log(result.data);
         });
       }
 
