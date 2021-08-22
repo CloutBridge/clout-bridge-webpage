@@ -43,7 +43,7 @@ export default class IdentityModule{
             if(message.origin === "https://identity.bitclout.com"){
                 const {data: {id: id, method: method, payload: payload}} = message;    
 
-                //console.log(message)
+                console.log(message)
         
                 //console.log(`Response Id: ${id} Method: ${method} \nPayload: ${payload}`);
                 
@@ -54,6 +54,17 @@ export default class IdentityModule{
                     this.handleLogin(payload);
                 }
 
+                if(payload !== undefined && payload.encryptedMessage !== undefined){
+
+                    //console.log(message)
+
+                    //var encryptedMessageBuffer = Buffer.from(payload.encryptedMessage, 'hex');
+
+                    console.log(payload.encryptedMessage)
+
+                    
+
+                }
                 if(payload !== undefined && payload.signedHashes !== undefined && payload.signedHashes.length === 1){
                     //console.log("signed hash:" + payload.signedHashes);
                     app.updateSignedBridgeMessage(payload.signedHashes[0]);
@@ -67,6 +78,7 @@ export default class IdentityModule{
             
         });
     }
+
 
     handleInit(e){
         if (!this.init) {

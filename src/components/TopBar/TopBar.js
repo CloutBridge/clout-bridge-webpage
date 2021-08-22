@@ -28,7 +28,7 @@ const axios = require('axios');
 class TopBar extends Component{
 
     state = {
-        exchangePrice: 0, selectedUserName: "Bitclout Sign-In", userRetrieved: false, barSelectedUser: null
+        exchangePrice: 0,
     }
 
     constructor(props){
@@ -61,15 +61,7 @@ class TopBar extends Component{
             //console.log(result.data.USDCentsPerBitCloutExchangeRate)
             this.setState({exchangePrice: Number(result.data.USDCentsPerBitCloutExchangeRate) / 100});
         })
-        
-        if(this.props.selectedUser !== null){ 
-            axios.get(`${this.props.environment}/api/getUser?sender=${this.props.selectedUser}`).then((response) =>{
-                //console.log(response.data.username)
-                this.setState({selectedUserName: response.data.username});
-            })
-            return;
-        }
-        this.setState({selectedUserName:"Bitclout Sign-In"})
+
     }
 
     render(){
@@ -83,7 +75,7 @@ class TopBar extends Component{
                                        : <Menu.Menu position='right'>
                                             <Menu.Item><Header size='tiny' color='grey'>$CLOUT: ${this.state.exchangePrice}</Header></Menu.Item>
                                             <Menu.Item><Header>{networkMessage}</Header></Menu.Item>
-                                            <Menu.Item ><Button size='mini' secondary onClick = {this.props.idModule.login}><div id="OverflowBtn"><p>{this.state.selectedUserName}</p></div></Button></Menu.Item>
+                                            <Menu.Item ><Button size='mini' secondary onClick = {this.props.idModule.login}><div id="OverflowBtn"><p>{this.props.username}</p></div></Button></Menu.Item>
                                             <Menu.Item ><Button size='mini' secondary title={this.props.ethAccount} onClick={this.props.updateWeb3}><div id="OverflowBtn"><p>{this.props.ethAccount}</p></div></Button></Menu.Item>
                                         </Menu.Menu>
         

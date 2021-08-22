@@ -33,7 +33,9 @@ var currentFeeLevel;
 
 var oneClout = 1000000000;
 
-var chainDomain = "https://goerli.etherscan.io/tx/";
+var ethChainDomain = "https://goerli.etherscan.io/tx/";
+
+var cloutChainDomin = "https://explorer.bitclout.com/?query-node=https:%2F%2Fapi.bitclout.com&public-key="
 
 class Bridge extends Component{
 
@@ -57,11 +59,18 @@ class Bridge extends Component{
     componentDidMount() {
         if(this.props.prod){
             this.countdown();
+            this.interval = setInterval( async() =>{
+                await this.countdown();
+            }, 1000);
+            return;
         }
-        this.evaluateUserConnected()
-        this.interval = setInterval( async() =>{
-            await this.evaluateUserConnected();    
-        }, 5000);
+        else{
+            this.evaluateUserConnected()
+            this.interval = setInterval( async() =>{
+                
+                await this.evaluateUserConnected();    
+            }, 5000);
+        }
       }
     
       componentWillUnmount() {
@@ -236,7 +245,7 @@ class Bridge extends Component{
                             <p>$CLOUT Balance: {Number(this.state.bitcloutBalance).toFixed(9)}</p>
                             <p>$bCLOUT Balance: {Number(this.state.ethereumCloutBalance).toFixed(9)}</p>
                             <Divider></Divider>
-                            <Header size="tiny"> Transfer</Header>
+                            <Header size="tiny"> Transfer:</Header>
                             <p>
                             To:{' '}
                             <Dropdown button inline selection placeholder={options[0]} options={options} onChange= {this.changeNetwork}/>
@@ -278,7 +287,7 @@ class Bridge extends Component{
 
                         {unbridgeSection}
 
-                        <p id="disclaimer">Disclaimer: CloutBridge is a new project and my have unintended risks associated with its of use.</p>
+                        <p id="disclaimer">*Disclaimer: CloutBridge is a new project and my have unintended risks associated with its of use.</p>
                     </div>
                 </div>
         return content;
@@ -336,9 +345,13 @@ class Bridge extends Component{
 
             this.props.idModule.approve(transactionHex);
 
-            this.setState(() => ({transferError: `Attemping to send $Clout to Ethereum Network. ${'\n'} Wait for transaction to be added to bitclout blockchain for bridge to occur.`, sendButtonText:"Sending...", sendDiabled: true}));
+            var transactionLink = cloutChainDomin + this.props.selectedUser;
 
-        }catch(error){
+            this.setState(() => ({transferError: `Attemping to send $Clout to Ethereum Network. ${'\n'} Wait for transaction to have one confirmation on Bitclout blockchain.(~12 minutes)`, sendButtonText:"Sending...", sendDiabled: true,
+                                  transactionText: <p>User Transactions: <a href={transactionLink} target="_blank" >{this.props.selectedUser}</a></p>, sendButtonText: "Send"}));
+
+
+        }catch(error){  
             console.log("Bitclout transfer Error. \n" + error)
         }
 
@@ -370,11 +383,11 @@ class Bridge extends Component{
 
         //console.log(result);
 
-        var transactionLink = chainDomain + result.transactionHash;
+        var transactionLink = ethChainDomain + result.transactionHash;
 
         //console.log(transactionLink);
         
-        this.setState(() => ({transactionText: <p>Transaction: <a href={transactionLink}>{result.transactionHash}</a></p>, sendButtonText: "Send"}))
+        this.setState(() => ({transactionText: <p>Transaction: <a href={transactionLink} target="_blank">{result.transactionHash}</a></p>, sendButtonText: "Send"}))
     }
 
     handleRecieveText = async (cloutValue) =>{
@@ -449,17 +462,16 @@ class Bridge extends Component{
                 <p id="bridgeHeader">Bridge Accounts</p>
                 <div id='bridgeUserText'>
                     <Container>
-                        <Header size='medium'>Your bitclout address has not been bridged to the ethereum blockchain.</Header>
-                        <Header size='small'>Confirm you want to bridge the following addresses:</Header>
+                        <Header size='Medium'>Confirm you want to bridge the following addresses.</Header>
                         <p>Bitclout Address: {this.props.selectedUser}</p>
                         <p>Ethereum Address: {this.props.accounts[0]}</p>
                         <div id ='userBridge'>
+                            <p>{this.state.bridgeUserText}</p>
                             {signMessage}
                             {btnSection}
-                            <p>{this.state.bridgeUserText}</p>
                             <p>Bridge Fee: {this.props.web3.utils.fromWei(this.state.bridgeFee.toString(), "ether")} Ether</p>
                         </div>
-                        <p id="disclaimer">Disclaimer: CloutBridge is a new project and my have unintended risks associated with its of use.</p>
+                        <p id="disclaimer">*Disclaimer: CloutBridge is a new project and my have unintended risks associated with its of use.</p>
                     </Container>
                 </div>
             </div>
@@ -545,10 +557,11 @@ class Bridge extends Component{
     
         var bridgeMessageHash = crypto.createHash("sha256").update(bridgeMessage).digest();
     
-        console.log(bridgeMessageHash.toString('hex'));
+        //console.log(bridgeMessageHash.toString('hex'));
     
         var newId = uuidv4();
     
+        
         var message = {
           id: newId,
           service: 'identity',
@@ -561,8 +574,8 @@ class Bridge extends Component{
           },
         }
 
-        /*
-        var message ={
+        
+        var message2 ={
             id: newId,
             service: 'identity',
             method: 'encrypt',
@@ -573,9 +586,10 @@ class Bridge extends Component{
                 encryptedSeedHex: this.props.encryptedSeedHex,
                 message: "encrypt this"
             }
-        }*/
+        }
     
-        this.props.idModule.postMessage(message);
+        //this.props.idModule.postMessage(message);
+        this.props.idModule.postMessage(message2);
       }
 
     bridgeComponent(){
@@ -643,7 +657,7 @@ class Bridge extends Component{
 
         return(
 
-            <Segment style={{overflow:'auto', maxHeight:"92.25vh", padding: '6em 0em' }}>
+            <Segment style={{overflow:'auto', maxHeight:"92.25vh", padding: '2em 0em' }}>
                 {transparencyComponent}
                 <div id='spacer'></div>
                 <Container textAlign='center'>

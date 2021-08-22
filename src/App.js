@@ -18,6 +18,7 @@ import Main from "./components/Main/Main.js";
 import IdentityModule from './IdentityModule.js' ;
 
 import { createMedia } from '@artsy/fresnel';
+import axios from 'axios';
 
 const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
@@ -50,7 +51,7 @@ class App extends Component {
     var prod = true;
 
     this.state = {
-      web3: null, accounts: null, iframe: null, selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, contractInstance: null, 
+      web3: null, accounts: null, iframe: null, username: "Bitclout Sign-In", selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, contractInstance: null, 
       bridgeUserButtonText: "Sign Bridge Message.", signedBridgeMessage: null,
       network: 0, environment: prod ? "https://ratiomaster.site" : "http://localhost:3001", prod: prod,
       toggleSideBar: false};
@@ -78,7 +79,12 @@ class App extends Component {
   }
 
   updateUser(user, accessLevelHmac, encryptedSeedHex){
-    this.setState({selectedUser: user, accessLevelHmac: accessLevelHmac, encryptedSeedHex: encryptedSeedHex})
+
+    console.log("update user")
+
+    axios.get(`${this.state.environment}/api/getUser?sender=${user}`).then((response)=>{
+        this.setState({username: response.data.username, selectedUser: user, accessLevelHmac: accessLevelHmac, encryptedSeedHex: encryptedSeedHex})
+    })
     //console.log(`${this.state.selectedUser}, ${this.state.accessLevelHmac}, ${this.state.encryptedSeedHex}`);
   }
 
@@ -147,7 +153,6 @@ class App extends Component {
 
     var ethAccount = this.state.accounts ?  this.state.accounts[0] : "Connect Metamask";
 
-    var cloutAccount = this.state.selectedUser ? this.state.selectedUser : "Bitclout Sign-In"; 
 
     var visible = this.state.toggleSideBar;
 
@@ -159,7 +164,7 @@ class App extends Component {
         <iframe id="identity" title="id" frameBorder="1" className="" src="https://identity.bitclout.com/embed?v=2" />
         
         <HashRouter>
-          <TopBar {...this.state} updateWeb3 = {this.updateWeb3} idModule = {idModule} cloutAccount = {cloutAccount} ethAccount = {ethAccount} toggleSideBar = {this.toggleSideBar}/>
+          <TopBar {...this.state} updateWeb3 = {this.updateWeb3} idModule = {idModule} ethAccount = {ethAccount} toggleSideBar = {this.toggleSideBar}/>
           <Main {...this.state}  visible = {visible} idModule={idModule} handleBridgeRequest = {this.handleBridgeRequest} postMessage = {this.postMessage} />
         </HashRouter>
         

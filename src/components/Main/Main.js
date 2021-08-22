@@ -1,19 +1,17 @@
 import React, { Component } from "react";
 import 'semantic-ui-css/semantic.min.css';
-import {Checkbox,
+import {
     Grid,
     Header,
     Icon,
-    Image,
     Menu,
-    Segment,
-    Sidebar,Container} from 'semantic-ui-react';
+    Sidebar,} from 'semantic-ui-react';
 
 import "./Main.css";
 
 import farm from "../../icons/FarmIcon.png";
 
-import bridgeIcon from "../../icons/CloutBridgeNewIcon.png";
+import bridgeIcon from "../../icons/CloutBridgeIconV2.png";
 
 import { Route, HashRouter, NavLink } from "react-router-dom";
 
@@ -27,6 +25,7 @@ class Main extends Component{
     constructor(props){
         super();
         this.props = props;
+        this.uniswapUrl = this.props.prod ? "https://app.uniswap.org/#/" : "https://app.uniswap.org/#/swap?outputCurrency=0xC2d043001a50F6C67bA91Ace6005d5F713503939&use=V2"
     }
 
     sidebarContent(){
@@ -58,9 +57,16 @@ class Main extends Component{
             
         </div>
 
-        if(this.props.prod || !this.props.prod){
+        if(!this.props.prod){
             //console.log("sidbar prod")
-            content = <div></div>;
+            content = <Menu.Item >
+                        <Grid columns={4}>
+                            <Grid.Column><Icon name='arrows alternate horizontal' size='large' color='black'/></Grid.Column>
+                            <Grid.Column><Header size='large'><p>Swap</p></Header></Grid.Column>
+                            <Grid.Column></Grid.Column>
+                            <Grid.Column></Grid.Column>
+                        </Grid>
+                    </Menu.Item>;
         }
 
         return content;
@@ -113,7 +119,16 @@ class Main extends Component{
                             </NavLink>
                         </Menu.Item>
 
-                        {sidebarContent}
+                        <Menu.Item >
+                            <a href={this.uniswapUrl} target="_blank">
+                                <Grid columns={4}>
+                                    <Grid.Column><Icon name='arrows alternate horizontal' size='large' color='black'/></Grid.Column>
+                                    <Grid.Column><Header size='large'><p>Swap</p></Header></Grid.Column>
+                                    <Grid.Column></Grid.Column>
+                                    <Grid.Column></Grid.Column>
+                                </Grid>
+                            </a>
+                         </Menu.Item>
 
                         <Menu.Item >
                             <a href="https://clout-bridge.gitbook.io/clout-bridge/"target="_blank">
