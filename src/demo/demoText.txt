@@ -1,8 +1,0 @@
-This video demonstrates a user bridging there $CLOUT to the Ethereum blockchain via Clout Bridge.
-
-0:00 The user signs into their Metamask and Bitclout accounts.
-0:11 User signs bridge message and bridges accounts.
-0:53 User selects network and amount to send.
-1:05 User bridges $CLOUT to the Ethereum blockchain.
-1:20 One block confirmation is needed to bridge $CLOUT.
-1:30 $bCLOUT is received on the Ethereum blockchain.
