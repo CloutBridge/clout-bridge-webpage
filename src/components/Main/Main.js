@@ -34,7 +34,7 @@ class Main extends Component{
             
             <Menu.Item>
                 <Grid columns={4}>
-                    <Grid.Column><img src={farm} id='farm'/></Grid.Column>
+                    <Grid.Column><img src={farm} id='farm' alt=""/></Grid.Column>
                     <Grid.Column><Header size='large'><p>Farm</p></Header></Grid.Column>
                     <Grid.Column></Grid.Column>
                     <Grid.Column></Grid.Column>
@@ -74,8 +74,6 @@ class Main extends Component{
 
     render(){
 
-        var sidebarContent = this.sidebarContent()
-
         return (
             <div id="mainDiv">
                 <Sidebar.Pushable>
@@ -111,7 +109,7 @@ class Main extends Component{
                         <Menu.Item>
                             <NavLink to = "/bridge">
                                 <Grid columns={4}>
-                                    <Grid.Column><img src={bridgeIcon}/></Grid.Column>
+                                    <Grid.Column><img src={bridgeIcon} alt=""/></Grid.Column>
                                     <Grid.Column><Header size='large'><p>Bridge</p></Header></Grid.Column>
                                     <Grid.Column></Grid.Column>
                                     <Grid.Column></Grid.Column>
@@ -120,7 +118,7 @@ class Main extends Component{
                         </Menu.Item>
 
                         <Menu.Item >
-                            <a href={this.uniswapUrl} target="_blank">
+                            <a href={this.uniswapUrl} target="_blank" rel="noreferrer">
                                 <Grid columns={4}>
                                     <Grid.Column><Icon name='arrows alternate horizontal' size='large' color='black'/></Grid.Column>
                                     <Grid.Column><Header size='large'><p>Swap</p></Header></Grid.Column>
@@ -131,7 +129,7 @@ class Main extends Component{
                          </Menu.Item>
 
                         <Menu.Item >
-                            <a href="https://clout-bridge.gitbook.io/clout-bridge/"target="_blank">
+                            <a href="https://clout-bridge.gitbook.io/clout-bridge/" target="_blank" rel="noreferrer">
                                 <Grid columns={4}>
                                     <Grid.Column><Icon name='book' color='black' size='large'/></Grid.Column>
                                     <Grid.Column><Header size='large'><p>Docs</p></Header></Grid.Column>

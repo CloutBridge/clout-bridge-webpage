@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import 'semantic-ui-css/semantic.min.css';
-import {Segment, Container, Header,List, Embed, Icon, Menu, Grid,Divider} from 'semantic-ui-react';
+import {Segment, Container, Header,List, Embed,Grid,Divider} from 'semantic-ui-react';
 
 import "./LaunchPage.css"
 
 import CloutBridgeLogo from '../../logos/newLogo/black/MainLogoAbelResize.png'
 
 import RoadMapImage from '../../logos/roadmap/RoadMap.jpg';
-
-import diamondIcon from '../../icons/diamond/smallerDiamond.png';
 
 class LaunchPage extends Component{
     constructor(props){
@@ -27,8 +25,7 @@ class LaunchPage extends Component{
                 <Grid >
                     <Grid.Row >
                         <Grid.Column >
-                            <a id="goto"></a>
-                            <img src={CloutBridgeLogo} id="logoImage"/>
+                            <img src={CloutBridgeLogo} id="logoImage" alt=""/>
                         </Grid.Column>
                     </Grid.Row>
                     <Divider />
@@ -114,7 +111,7 @@ class LaunchPage extends Component{
                     <Grid.Row>
                         <Grid.Column>
 
-                                <img src ={RoadMapImage} />
+                                <img src ={RoadMapImage} alt=""/>
 
                         </Grid.Column>
                         {/*<Container textAlign='right'>

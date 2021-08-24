@@ -47,9 +47,9 @@ export default class IdentityModule{
         
                 //console.log(`Response Id: ${id} Method: ${method} \nPayload: ${payload}`);
                 
-                if (method == 'initialize') {
+                if (method === 'initialize') {
                     this.handleInit(message);
-                } else if (method == 'login') {
+                } else if (method === 'login') {
                     //console.log(message);
                     this.handleLogin(payload);
                 }
@@ -59,10 +59,7 @@ export default class IdentityModule{
                     //console.log(message)
 
                     //var encryptedMessageBuffer = Buffer.from(payload.encryptedMessage, 'hex');
-
                     console.log(payload.encryptedMessage)
-
-                    
 
                 }
                 if(payload !== undefined && payload.signedHashes !== undefined && payload.signedHashes.length === 1){

@@ -9,7 +9,7 @@ import {
 
 import Web3 from "web3";
 
-import bitcloutBridgeContract from "./contracts/BridgedBitclout.json";
+import bitcloutBridgeContract from "./contracts/BridgedClout.json";
 
 import TopBar from "./components/TopBar/TopBar.js";
 
@@ -17,29 +17,7 @@ import Main from "./components/Main/Main.js";
 
 import IdentityModule from './IdentityModule.js' ;
 
-import { createMedia } from '@artsy/fresnel';
 import axios from 'axios';
-
-const { MediaContextProvider, Media } = createMedia({
-  breakpoints: {
-    mobile: 0,
-    tablet: 768,
-    computer: 1024,
-  },
-})
-
-//var init = false;
-//var iframe = null;
-//var pendingRequests = [];
-//var identityWindow = null;
-
-//var users = null;
-
-//var connectionId = null;
-
-//var selectedUser = null;
-//var accessLevelHmac = null;
-//var encryptedSeedHex = null;
 
 var idModule;
 
@@ -48,7 +26,7 @@ class App extends Component {
   constructor(){
     super();
 
-    var prod = true;
+    var prod = false;
 
     this.state = {
       web3: null, accounts: null, iframe: null, username: "Bitclout Sign-In", selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, contractInstance: null, 
@@ -126,7 +104,7 @@ class App extends Component {
         params: networkData,
       });*/
 
-      const contractInstance = new web3.eth.Contract(bitcloutBridgeContract.abi, '0xC2d043001a50F6C67bA91Ace6005d5F713503939');
+      const contractInstance = new web3.eth.Contract(bitcloutBridgeContract.abi, '0xE81Dc722D7C7af37aDcF4CC66Ac62543AAeE1Ca2');
 
       this.setState({web3, accounts, contractInstance, network});
 

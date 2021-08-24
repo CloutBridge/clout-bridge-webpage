@@ -13,7 +13,6 @@ import CloutBridgeLogo from "../../logos/newLogo/black/MainLogoAbelTopbar.png";
 import CloutBridgeIcon from "../../icons/MainLogoAbelTopbarMobile.png";
 
 import { createMedia } from '@artsy/fresnel';
-import { thisTypeAnnotation } from "@babel/types";
 
 const { MediaContextProvider, Media } = createMedia({
     breakpoints: {
@@ -66,7 +65,8 @@ class TopBar extends Component{
 
     render(){
 
-        var networkMessage = this.props.network === 5 ? "Goerli Network" : (this.props.network === 0) ? "" : "Change Network to Goerli Testnet";
+        var networkMessage = this.props.network === 1 ? "Ethereum Network" 
+                           : this.props.network === 5 ? "Goerli Network" : (this.props.network === 0) ? "" : "Change Network to Ethereum (Goerli)";
 
         var prodMenu = this.props.prod ? <Menu.Menu position='right'>
                                             <Menu.Item></Menu.Item>
@@ -86,7 +86,7 @@ class TopBar extends Component{
                     <Menu borderless size='massive'>
                         <Menu.Menu position='left'>
                             <Menu.Item icon='sidebar'onClick = {this.props.toggleSideBar}></Menu.Item>
-                            <Menu.Item ><NavLink to = "/"><img src={CloutBridgeLogo}/></NavLink></Menu.Item>
+                            <Menu.Item ><NavLink to = "/"><img src={CloutBridgeLogo} alt=""/></NavLink></Menu.Item>
                         </Menu.Menu>
 
                         {prodMenu}
@@ -100,7 +100,7 @@ class TopBar extends Component{
                     <Menu borderless size='small'>
                         <Menu.Menu position='left'>
                             <Menu.Item icon='sidebar'onClick = {this.props.toggleSideBar}></Menu.Item>
-                            <Menu.Item ><NavLink to = "/"><img src={CloutBridgeIcon}/></NavLink></Menu.Item>
+                            <Menu.Item ><NavLink to = "/"><img src={CloutBridgeIcon} alt=""/></NavLink></Menu.Item>
                         </Menu.Menu>
                         <Menu.Item position='right'><Header size='tiny' color='grey'>$CLOUT: ${this.state.exchangePrice}</Header></Menu.Item>
                     </Menu>
