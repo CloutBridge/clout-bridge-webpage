@@ -58,7 +58,7 @@ class App extends Component {
 
   updateUser(user, accessLevelHmac, encryptedSeedHex){
 
-    console.log("update user")
+    //console.log("update user")
 
     axios.get(`${this.state.environment}/api/getUser?sender=${user}`).then((response)=>{
         this.setState({username: response.data.username, selectedUser: user, accessLevelHmac: accessLevelHmac, encryptedSeedHex: encryptedSeedHex})
