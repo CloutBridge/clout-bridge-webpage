@@ -98,7 +98,7 @@ class Bridge extends Component{
         
         if(this.props.web3 !== null){
 
-            //console.log("Web3 connected...");
+            console.log("Web3 connected...");
             //console.log(` Eth account: ${this.props.accounts[0]}`)
 
             if(this.props.network !== 5 && this.props.network !== 1){
