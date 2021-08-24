@@ -11,6 +11,10 @@
 # production
 /build
 
+#un-needed
+/src/gitbook
+/src/demo
+
 # misc
 .DS_Store
 .env.local
@@ -22,5 +26,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-// uneeded
-/src/gitbook
