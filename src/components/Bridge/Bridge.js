@@ -45,7 +45,7 @@ class Bridge extends Component{
             bcltAddressBridged: false, ethAddressBridged: false, accountsLinked: false, bridgeOpen: false,
             bitcloutBalance: 0, ethereumCloutBalance: 0, cloutInput: null, dropDownNetwork: null, transferError: null,
             transferAmount: 0,
-            countdownDate: new Date("Aug 27, 2021 15:00:00").getTime(), countdownComponent: null,
+            countdownDate: new Date("Sep 3, 2021 15:00:00").getTime(), countdownComponent: null,
             bridgeFee: 0, mintFee: 0, cloutBridgeFee: 0,
             cloutBridgeBcltBalance: null, bridgedCloutTotalBalance: null,
             transactionText: <p></p>
