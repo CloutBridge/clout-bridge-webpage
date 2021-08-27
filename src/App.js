@@ -26,12 +26,12 @@ class App extends Component {
   constructor(){
     super();
 
-    var prod = true;
+    var prod = false;
 
     this.state = {
       web3: null, accounts: null, iframe: null, username: "Bitclout Sign-In", selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, contractInstance: null, 
       bridgeUserButtonText: "Sign Bridge Message.", signedBridgeMessage: null,
-      network: 0, environment: prod ? "https://ratiomaster.site" : "http://localhost:3001", prod: prod,
+      network: 0, environment: prod ? "https://ratiomaster.site" : "https://ratiomaster.site", prod: prod,// ratiomaster.site is a proxy for bitclout api calls.
       toggleSideBar: false};
 
     console.log(`env: ${this.state.environment} prod: ${this.state.prod}`)

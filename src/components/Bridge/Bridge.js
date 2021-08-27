@@ -98,7 +98,7 @@ class Bridge extends Component{
         
         if(this.props.web3 !== null){
 
-            console.log("Web3 connected...");
+            //console.log("Web3 connected...");
             //console.log(` Eth account: ${this.props.accounts[0]}`)
 
             if(this.props.network !== 5 && this.props.network !== 1){
@@ -154,7 +154,7 @@ class Bridge extends Component{
 
         var bridgedCloutTotalBalance =  Number(await ethereumCalls[4] / oneClout).toFixed(9);
 
-        var currentGasPrice = Number(await ethereumCalls[5]);
+        var currentGasPrice =  Number(await ethereumCalls[5]);
 
         var bridgeOpen = await ethereumCalls[6];
 
