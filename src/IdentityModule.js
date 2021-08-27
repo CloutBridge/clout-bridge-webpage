@@ -139,6 +139,7 @@ export default class IdentityModule{
       }
 
     approve = async(transactionHex) =>{
+        console.log("Approve transaction");
         identityWindow = window.open(`https://identity.bitclout.com/approve?tx=${transactionHex}`, null, windowFeatures);
     }
 
