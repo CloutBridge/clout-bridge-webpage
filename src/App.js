@@ -26,7 +26,7 @@ class App extends Component {
   constructor(){
     super();
 
-    var prod = true;
+    var prod = false;
 
     this.state = {
       web3: null, accounts: null, iframe: null, username: "Bitclout Sign-In", selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, contractInstance: null, 
