@@ -29,7 +29,7 @@ class App extends Component {
     var prod = false;
 
     this.state = {
-      web3: null, accounts: null, iframe: null, username: "Bitclout Sign-In", selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, contractInstance: null, 
+      web3: null, accounts: null, iframe: null, username: "Bitclout Sign-In", selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, contractInstance: null, contractAddress: "0xE81Dc722D7C7af37aDcF4CC66Ac62543AAeE1Ca2", 
       bridgeUserButtonText: "Sign Bridge Message.", signedBridgeMessage: null,
       network: 0, environment: prod ? "https://ratiomaster.site" : "https://ratiomaster.site", prod: prod,// ratiomaster.site is a proxy for bitclout api calls.
       toggleSideBar: false};
@@ -104,9 +104,12 @@ class App extends Component {
         params: networkData,
       });*/
 
-      const contractInstance = new web3.eth.Contract(bitcloutBridgeContract.abi, '0xE81Dc722D7C7af37aDcF4CC66Ac62543AAeE1Ca2');
+      const contractAddress = '0xE81Dc722D7C7af37aDcF4CC66Ac62543AAeE1Ca2';
 
-      this.setState({web3, accounts, contractInstance, network});
+      const contractInstance = new web3.eth.Contract(bitcloutBridgeContract.abi, contractAddress);
+
+
+      this.setState({web3, accounts, contractInstance, network, contractAddress});
 
       //console.log("state" + this.state.network)
 

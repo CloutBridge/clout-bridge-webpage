@@ -47,7 +47,7 @@ class Bridge extends Component{
             transferAmount: 0,
             countdownDate: new Date("Sep 3, 2021 15:00:00").getTime(), countdownComponent: null,
             bridgeFee: 0, mintFee: 0, cloutBridgeFee: 0,
-            cloutBridgeBcltBalance: null, bridgedCloutTotalBalance: null,
+            cloutBridgeBcltBalance: null, bridgedCloutTotalBalance: null, bitcloutUser: null,
             transactionText: <p></p>
     }
 
@@ -106,6 +106,10 @@ class Bridge extends Component{
                 return;
             }
             else if(this.props.selectedUser !== null){
+
+                if(this.props.selectedUser !== this.state.bitcloutUser){
+                    this.setState(() => ({bitcloutUser: this.props.selectedUser, transferError: null, sendDisabled: false, transactionText: null}));
+                }
 
                 //console.log("Connected");
 
@@ -176,6 +180,8 @@ class Bridge extends Component{
 
     evaluateBitcloutState = async () =>{
 
+        
+
         await axios.get(`${this.props.environment}/api/cloutBridgeBalance`).then((response)=>{
             //console.log(response.data)
             this.setState({cloutBridgeBcltBalance : (response.data.cloutBridgeBalance / 1000000000)});
@@ -229,7 +235,7 @@ class Bridge extends Component{
                 if(this.state.dropDownNetwork === 'Ethereum'){
                     requestMintButton = Number(viewMintRequest) > 0 ? <Button disabled>bClout Mint Requested</Button> 
                                                                     : <Button onClick={this.mintRequest}>Request bClout Mint</Button>;
-                    sendButton = (Number(viewMintRequest) < Number(gas.mint * gasPrices[currentFeeLevel]) || this.state.sendDiabled)
+                    sendButton = (Number(viewMintRequest) < Number(gas.mint * gasPrices[currentFeeLevel]) || this.state.sendDisabled)
                                                          ? <Button disabled>{this.state.sendButtonText}</Button> 
                                                          : <Button onClick={this.handleSend}>{this.state.sendButtonText}</Button>;
                     feeText = <p>Bitclout to Ethereum Fee: {this.props.web3.utils.fromWei(this.state.mintFee.toString(), 'ether')} ether + {' '}
@@ -358,7 +364,7 @@ class Bridge extends Component{
 
             var transactionLink = cloutChainDomin + this.props.selectedUser;
 
-            this.setState(() => ({transferError: `Attemping to send $Clout to Ethereum Network. ${'\n'} Wait for transaction to have one confirmation on Bitclout blockchain.(~12 minutes)`, sendButtonText:"Send", sendDiabled: true,
+            this.setState(() => ({transferError: `Attemping to send $Clout to Ethereum Network. ${'\n'} Wait for transaction to have one confirmation on Bitclout blockchain.(~12 minutes)`, sendButtonText:"Send", sendDisabled: true,
                                   transactionText: <p>User Transactions: <a href={transactionLink} target="_blank" rel="noreferrer">{this.props.selectedUser}</a></p>}));
 
 
