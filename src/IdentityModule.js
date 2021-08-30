@@ -136,6 +136,15 @@ export default class IdentityModule{
         await axios.get(`${app.getEnvironment()}/api/sendTransaction?signedTransactionHex=${signedTransactionHex}`).then((result)=>{
           //console.log(result.data);
         });
+        if (identityWindow !== null) {
+
+            console.log("close identity window");
+            identityWindow.close();
+            identityWindow = null;
+            return;
+        }
+            console.log("identity window null");
+        
       }
 
     approve = async(transactionHex) =>{
