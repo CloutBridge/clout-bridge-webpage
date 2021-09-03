@@ -65,8 +65,8 @@ class TopBar extends Component{
 
     render(){
 
-        var networkMessage = this.props.network === 1 ? "Ethereum Network" 
-                           : this.props.network === 5 ? "Goerli Network" : (this.props.network === 0) ? "" : "Change Network to Ethereum (Goerli)";
+        var networkMessage = this.props.network === 137 ? "Polygon Network" 
+                           : this.props.network === 5 ? "Goerli Network" : (this.props.network === 0) ? "" : "Change Network to Polygon";
 
         var prodMenu = this.props.prod ? <Menu.Menu position='right'>
                                             <Menu.Item></Menu.Item>

@@ -85,29 +85,28 @@ class App extends Component {
       const accounts = await web3.eth.getAccounts();
       
       const network = await web3.eth.getChainId();
-      /*
+      
       var networkData = [
         {
-          chainId: "0x61"
-          chainName: "BSCTESTNET",
-          rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545"],
+          chainId: "0x89",
+          chainName: "Polygon",
+          rpcUrls: ["https://rpc-mainnet.maticvigil.com/"],
           nativeCurrency: {
-            name: "BINANCE COIN",
-            symbol: "BNB",
+            name: "Matic",
+            symbol: "MATIC",
             decimals: 18,
           },
-          blockExplorerUrls: ["https://testnet.bscscan.com/"],
+          blockExplorerUrls: ["https://explorer-mainnet.maticvigil.com/"],
         },
       ];
       window.ethereum.request({
         method: "wallet_addEthereumChain",
         params: networkData,
-      });*/
-
-      const contractAddress = '0xE81Dc722D7C7af37aDcF4CC66Ac62543AAeE1Ca2';
+      });
+      
+      const contractAddress = '0x44F5c95A3fC813d15aB008F7aB5e8d2a61216424';
 
       const contractInstance = new web3.eth.Contract(bitcloutBridgeContract.abi, contractAddress);
-
 
       this.setState({web3, accounts, contractInstance, network, contractAddress});
 

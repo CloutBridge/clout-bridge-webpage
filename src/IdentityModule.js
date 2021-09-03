@@ -43,7 +43,7 @@ export default class IdentityModule{
             if(message.origin === "https://identity.bitclout.com"){
                 const {data: {id: id, method: method, payload: payload}} = message;    
 
-                console.log(message)
+                //console.log(message)
         
                 //console.log(`Response Id: ${id} Method: ${method} \nPayload: ${payload}`);
                 

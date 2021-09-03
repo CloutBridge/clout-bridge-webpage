@@ -27,13 +27,13 @@ var gas ={
     mint: 80032
 }
 
-var mintMinimum = 1;
+var mintMinimum = 100000000;
 
 var currentFeeLevel;
 
 var oneClout = 1000000000;
 
-var ethChainDomain = "https://goerli.etherscan.io/tx/";
+var ethChainDomain =  "https://polygonscan.com/tx/";//"https://goerli.etherscan.io/tx/";
 
 var cloutChainDomin = "https://explorer.bitclout.com/?query-node=https:%2F%2Fapi.bitclout.com&public-key="
 
@@ -101,8 +101,8 @@ class Bridge extends Component{
             //console.log("Web3 connected...");
             //console.log(` Eth account: ${this.props.accounts[0]}`)
 
-            if(this.props.network !== 5 && this.props.network !== 1){
-                this.setState({connectedContent: <p id="userConnected">Switch Network to Ethereum (Goerli)</p>})
+            if(this.props.network !== 5 && this.props.network !== 137){
+                this.setState({connectedContent: <p id="userConnected">Switch Network to Polygon</p>})
                 return;
             }
             else if(this.props.selectedUser !== null){
@@ -147,6 +147,8 @@ class Bridge extends Component{
         ethereumCalls.push(this.props.contractInstance.methods.totalSupply().call());
         ethereumCalls.push(this.props.web3.eth.getGasPrice());
         ethereumCalls.push(this.props.contractInstance.methods.bridgeState.call().call());
+        ethereumCalls.push(this.props.contractInstance.methods.bridgeFee.call().call());
+        ethereumCalls.push(this.props.contractInstance.methods.mintFee.call().call());
 
         var bcltAddressBridged = await ethereumCalls[0];
 
@@ -162,17 +164,26 @@ class Bridge extends Component{
 
         var bridgeOpen = await ethereumCalls[6];
 
+        var bFee = await ethereumCalls[7];
+
+        var mFee = await ethereumCalls[8];
+        
         currentFeeLevel = currentGasPrice <= gasPrices.low   ? "low" : 
                          (currentGasPrice <= gasPrices.med)  ? "med" : 
                          (currentGasPrice <= gasPrices.high) ? "high": 
                        (currentGasPrice <= gasPrices.higher) ? "higher" :
                        (currentGasPrice <= gasPrices.extreme)? "extreme": "unbearable";
 
+        var bridgeFee =  this.props.network === 137 ? Number(bFee) : (Number(gas.bridge) * Number(gasPrices[currentFeeLevel]));
+        var mintFee = this.props.network === 137 ? Number(mFee) : (Number(gas.mint) * Number(gasPrices[currentFeeLevel]))
+
+        //console.log(bridgeFee);
+        
         var accountsLinked = this.props.selectedUser.toString() === ethToBcltAddress.toString() ? true :  false;
 
         //console.log(` bcltAddressBridged: ${bcltAddressBridged},  ethAddressBridged:${ethAddressBridged}, ethToBcltAddress:${ethToBcltAddress}, ethereumCloutBalance:${ethereumCloutBalance}, bridgedCloutTotalBalance:${bridgedCloutTotalBalance}`)
 
-        this.setState(() => ({bridgeFee: (Number(gas.bridge) * Number(gasPrices[currentFeeLevel])), mintFee: (Number(gas.mint) * Number(gasPrices[currentFeeLevel])),
+        this.setState(() => ({bridgeFee, mintFee,
             bcltAddressBridged, ethAddressBridged, ethToBcltAddress, ethereumCloutBalance, bridgedCloutTotalBalance, accountsLinked, bridgeOpen
         }));
         
@@ -214,7 +225,7 @@ class Bridge extends Component{
     transferCloutComponent = async () =>{
 
         const options =[
-            {key:"Ethereum", text: "Ethereum", value:"Ethereum"},
+            {key:"Polygon", text: "Polygon", value:"Polygon"},
             {key:"Bitclout", text: "Bitclout", value:"Bitclout"},
         ]
 
@@ -232,18 +243,18 @@ class Bridge extends Component{
             var feeText;
             var viewMintRequest = await this.props.contractInstance.methods.viewMintRequest().call({from: this.props.accounts[0]});
             if(this.state.dropDownNetwork !== null){
-                if(this.state.dropDownNetwork === 'Ethereum'){
+                if(this.state.dropDownNetwork === 'Polygon'){
                     requestMintButton = Number(viewMintRequest) > 0 ? <Button disabled>bClout Mint Requested</Button> 
                                                                     : <Button onClick={this.mintRequest}>Request bClout Mint</Button>;
                     sendButton = (Number(viewMintRequest) < Number(gas.mint * gasPrices[currentFeeLevel]) || this.state.sendDisabled)
                                                          ? <Button disabled>{this.state.sendButtonText}</Button> 
                                                          : <Button onClick={this.handleSend}>{this.state.sendButtonText}</Button>;
-                    feeText = <p>Bitclout to Ethereum Fee: {this.props.web3.utils.fromWei(this.state.mintFee.toString(), 'ether')} ether + {' '}
+                    feeText = <p>Bitclout to Polygon Fee: {this.props.web3.utils.fromWei(this.state.mintFee.toString(), 'ether')} matic + {' '}
                     {Number((Number(this.state.cloutBridgeFee)) / 1000000000).toFixed(9)} $Clout</p>
                 }
                 if(this.state.dropDownNetwork === 'Bitclout'){
                     sendButton = <Button onClick={this.handleSend}>{this.state.sendButtonText}</Button>
-                    feeText = <p>Ethereum to Bitclout Fee: {Number((Number(this.state.cloutBridgeFee) + Number(bitcloutTransferFee)) / 1000000000).toFixed(9)} $Clout</p>
+                    feeText = <p>Polygon to Bitclout Fee: {Number((Number(this.state.cloutBridgeFee) + Number(bitcloutTransferFee)) / 1000000000).toFixed(9)} $Clout</p>
                 }
             }
 
@@ -326,7 +337,7 @@ class Bridge extends Component{
                 return;
             }
             if(this.state.dropDownNetwork !== null){
-                if(this.state.dropDownNetwork === "Ethereum"){
+                if(this.state.dropDownNetwork === "Polygon"){
                     await this.transferToEthereum();
                 }
                 else{
@@ -364,7 +375,7 @@ class Bridge extends Component{
 
             var transactionLink = cloutChainDomin + this.props.selectedUser;
 
-            this.setState(() => ({transferError: `Attemping to send $Clout to Ethereum Network. ${'\n'} Wait for transaction to have one confirmation on Bitclout blockchain.(~12 minutes)`, sendButtonText:"Send", sendDisabled: true,
+            this.setState(() => ({transferError: `Attemping to send $Clout to Polygon Network. ${'\n'} Wait for transaction to have one confirmation on Bitclout blockchain.(~12 minutes)`, sendButtonText:"Send", sendDisabled: true,
                                   transactionText: <p>User Transactions: <a href={transactionLink} target="_blank" rel="noreferrer">{this.props.selectedUser}</a></p>}));
 
 
@@ -379,7 +390,7 @@ class Bridge extends Component{
         //console.log(`Send ${clout} nanos`);
         //console.log("Transfer to Bitclout");
         if(clout > Number(this.state.ethereumCloutBalance) * oneClout){
-            this.setState(() => ({transferError: "Not enough $clout on ethereum network to send.", sendButtonText:"Send"}));
+            this.setState(() => ({transferError: "Not enough $clout on Polygon network to send.", sendButtonText:"Send"}));
             return;
         }
         if(clout - bitcloutTransferFee <= 0){
@@ -394,7 +405,7 @@ class Bridge extends Component{
         //console.log(`Ether burn fee: ${ethBurnFee}`);
         
 
-        this.setState(() => ({transferError: `Attemping to send $bClout to Bitclout Network. ${'\n'} Wait for transaction to be added to Ethereum blockchain for bridge to occur.`}));
+        this.setState(() => ({transferError: `Attemping to send $bClout to Bitclout Network. ${'\n'} Wait for transaction to be added to Polygon blockchain for bridge to occur.`}));
 
         var result = await this.props.contractInstance.methods.burn(clout).send({from: this.props.accounts[0]});
 
@@ -417,7 +428,7 @@ class Bridge extends Component{
             }
             var transferAmount;
             var cloutBridgeFee = Math.floor((cloutValue * oneClout) * .01);
-            if(this.state.dropDownNetwork !== null && this.state.dropDownNetwork === "Ethereum"){
+            if(this.state.dropDownNetwork !== null && this.state.dropDownNetwork === "Polygon"){
                 transferAmount = (Math.floor((cloutValue * oneClout) * .99));
             }
             if(this.state.dropDownNetwork !== null && this.state.dropDownNetwork === "Bitclout"){
@@ -481,12 +492,12 @@ class Bridge extends Component{
                     <Container>
                         <Header size='Medium'>Confirm you want to bridge the following addresses.</Header>
                         <p>Bitclout Address: {this.props.selectedUser}</p>
-                        <p>Ethereum Address: {this.props.accounts[0]}</p>
+                        <p>Polygon Address: {this.props.accounts[0]}</p>
                         <div id ='userBridge'>
                             {this.state.bridgeTransactionText}
                             {signMessage}
                             {btnSection}
-                            <p>Bridge Fee: {this.props.web3.utils.fromWei(this.state.bridgeFee.toString(), "ether")} Ether</p>
+                            <p>Bridge Fee: {this.props.web3.utils.fromWei(this.state.bridgeFee.toString(), "ether")} Matic</p>
                         </div>
                         <p id="disclaimer">*Disclaimer: CloutBridge is a new project and my have unintended risks associated with its of use.</p>
                     </Container>
@@ -502,14 +513,14 @@ class Bridge extends Component{
 
             var unbridgeButton = mintRequest > 0 ? <div>
                                                     <Button inverted secondary onClick={this.removeMintRequest}>Remove Mint Request.</Button>
-                                                    <p>You have a pending mint request of, {web3.utils.fromWei(mintRequest,'ether')} ether. Click above to remove it if you want to unbridge your Account.</p>
+                                                    <p>You have a pending mint request of, {web3.utils.fromWei(mintRequest,'ether')} matic. Click above to remove it if you want to unbridge your Account.</p>
                                                    </div>
                                                  : <Button inverted secondary onClick={this.unbridgeUser}>Unbridge Account.</Button>;
 
             let content = <div id='bridgeUserText'>
                             <p>Your ethereum address, {this.props.accounts[0]} is already bridged.</p>
                             <p> <b>But NOT to:</b> {this.props.selectedUser}</p>
-                            <p> Sign-In to the correct Bitclout Account or unbridge your ethereum address.</p>
+                            <p> Sign-In to the correct Bitclout Account or unbridge your Polygon address.</p>
                             <div id='userUnbridge'>{unbridgeButton}</div>
                           </div>
         
@@ -649,7 +660,7 @@ class Bridge extends Component{
                                         <Grid.Row>
                                             <Grid.Column></Grid.Column>
                                             <Grid.Column><p id='transparencyContent'>Bitclout $CLOUT: {this.state.cloutBridgeBcltBalance}</p> </Grid.Column>
-                                            <Grid.Column><p id='transparencyContent'>Ethereum $bCLOUT: {this.state.bridgedCloutTotalBalance}</p></Grid.Column>
+                                            <Grid.Column><p id='transparencyContent'>Polygon $bCLOUT: {this.state.bridgedCloutTotalBalance}</p></Grid.Column>
                                             <Grid.Column></Grid.Column>
                                         </Grid.Row>
                                     </Grid>

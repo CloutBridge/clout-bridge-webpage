@@ -25,7 +25,7 @@ class Main extends Component{
     constructor(props){
         super();
         this.props = props;
-        this.uniswapUrl = this.props.prod ? `https://app.uniswap.org/#/` : `https://app.uniswap.org/#/swap?outputCurrency=${this.props.contractAddress}&use=V2`;
+        this.uniswapUrl = `https://quickswap.exchange/#/swap?outputCurrency=${this.props.contractAddress}&use=V2`;
     }
 
     sidebarContent(){
