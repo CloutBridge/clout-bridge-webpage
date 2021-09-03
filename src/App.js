@@ -26,12 +26,12 @@ class App extends Component {
   constructor(){
     super();
 
-    var prod = true;
+    var prod = false;
 
     this.state = {
-      web3: null, accounts: null, iframe: null, username: "Bitclout Sign-In", selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, contractInstance: null, 
+      web3: null, accounts: null, iframe: null, username: "Bitclout Sign-In", selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, contractInstance: null, contractAddress: "0xE81Dc722D7C7af37aDcF4CC66Ac62543AAeE1Ca2", 
       bridgeUserButtonText: "Sign Bridge Message.", signedBridgeMessage: null,
-      network: 0, environment: prod ? "https://ratiomaster.site" : "http://localhost:3001", prod: prod,
+      network: 0, environment: prod ? "https://ratiomaster.site" : "https://ratiomaster.site", prod: prod,// ratiomaster.site is a proxy for bitclout api calls.
       toggleSideBar: false};
 
     console.log(`env: ${this.state.environment} prod: ${this.state.prod}`)
@@ -85,28 +85,30 @@ class App extends Component {
       const accounts = await web3.eth.getAccounts();
       
       const network = await web3.eth.getChainId();
-      /*
+      
       var networkData = [
         {
-          chainId: "0x61"
-          chainName: "BSCTESTNET",
-          rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545"],
+          chainId: "0x89",
+          chainName: "Polygon",
+          rpcUrls: ["https://rpc-mainnet.maticvigil.com/"],
           nativeCurrency: {
-            name: "BINANCE COIN",
-            symbol: "BNB",
+            name: "Matic",
+            symbol: "MATIC",
             decimals: 18,
           },
-          blockExplorerUrls: ["https://testnet.bscscan.com/"],
+          blockExplorerUrls: ["https://explorer-mainnet.maticvigil.com/"],
         },
       ];
       window.ethereum.request({
         method: "wallet_addEthereumChain",
         params: networkData,
-      });*/
+      });
+      
+      const contractAddress = '0xe306AeD16B434418e0cCC75F31FBF46B6bB1bEF2';
 
-      const contractInstance = new web3.eth.Contract(bitcloutBridgeContract.abi, '0xE81Dc722D7C7af37aDcF4CC66Ac62543AAeE1Ca2');
+      const contractInstance = new web3.eth.Contract(bitcloutBridgeContract.abi, contractAddress);
 
-      this.setState({web3, accounts, contractInstance, network});
+      this.setState({web3, accounts, contractInstance, network, contractAddress});
 
       //console.log("state" + this.state.network)
 

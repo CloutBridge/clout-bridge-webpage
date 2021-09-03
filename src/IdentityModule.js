@@ -43,7 +43,7 @@ export default class IdentityModule{
             if(message.origin === "https://identity.bitclout.com"){
                 const {data: {id: id, method: method, payload: payload}} = message;    
 
-                console.log(message)
+                //console.log(message)
         
                 //console.log(`Response Id: ${id} Method: ${method} \nPayload: ${payload}`);
                 
@@ -136,9 +136,19 @@ export default class IdentityModule{
         await axios.get(`${app.getEnvironment()}/api/sendTransaction?signedTransactionHex=${signedTransactionHex}`).then((result)=>{
           //console.log(result.data);
         });
+        if (identityWindow !== null) {
+
+            console.log("close identity window");
+            identityWindow.close();
+            identityWindow = null;
+            return;
+        }
+            console.log("identity window null");
+        
       }
 
     approve = async(transactionHex) =>{
+        console.log("Approve transaction");
         identityWindow = window.open(`https://identity.bitclout.com/approve?tx=${transactionHex}`, null, windowFeatures);
     }
 
