@@ -104,7 +104,7 @@ class App extends Component {
         params: networkData,
       });
       
-      const contractAddress = '0x44F5c95A3fC813d15aB008F7aB5e8d2a61216424';
+      const contractAddress = '0xe306AeD16B434418e0cCC75F31FBF46B6bB1bEF2';
 
       const contractInstance = new web3.eth.Contract(bitcloutBridgeContract.abi, contractAddress);
 
