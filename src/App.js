@@ -108,7 +108,7 @@ class App extends Component {
 
       const contractInstance = new web3.eth.Contract(bitcloutBridgeContract.abi, contractAddress);
 
-      this.setState({web3, accounts, contractInstance, network, contractAddress});
+      this.setState({web3, accounts, contractInstance, network, contractAddress: contractAddress});
 
       //console.log("state" + this.state.network)
 
