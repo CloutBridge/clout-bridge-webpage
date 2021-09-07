@@ -4,7 +4,7 @@ import {Segment, Container, Header,List, Embed,Grid,Divider} from 'semantic-ui-r
 
 import "./LaunchPage.css"
 
-import CloutBridgeLogo from '../../logos/newLogo/black/MainLogoAbelResize.png'
+import CloutBridgeLogo from '../../logos/newLogo/black/MainLogoAbelResizePoly.png'
 
 import RoadMapImage from '../../logos/roadmap/RoadMap.jpg';
 
@@ -33,14 +33,14 @@ class LaunchPage extends Component{
                         <Grid.Column>
                             <Container text>
                                 <Container>
-                                <p id="heading1">The Release of CloutBridge is Near!</p>
+                                <p id="heading1">What is CloutBridge?</p>
                                     <div id="marginleft">
                                     <Container textAlign='left'>
                                         <List>
                                             <List.Item></List.Item>
                                             <List.Item>
                                                 <List.Icon name="diamond"/>
-                                                <List.Content size=''><Header size='small'><p><b>CloutBridge allows Bitclout users to bridge their $CLOUT between Bitclout and Ethereum!</b></p></Header></List.Content>
+                                                <List.Content size=''><Header size='small'><p><b>CloutBridge allows Bitclout users to bridge their $CLOUT between Bitclout and Polygon!</b></p></Header></List.Content>
                                             </List.Item>
                                             <List.Item></List.Item>
                                             <List.Item>
@@ -50,7 +50,7 @@ class LaunchPage extends Component{
                                             <List.Item></List.Item>
                                             <List.Item>
                                                 <List.Icon name="diamond"/>
-                                                <List.Content><Header size='small'><p><b>Bridged Clout will be utilized for a variety of decentralized applications including Uniswap.</b></p></Header></List.Content>
+                                                <List.Content><Header size='small'><p><b>Bridged Clout can be utilized for a variety of decentralized applications including Quickswap.</b></p></Header></List.Content>
                                             </List.Item>
                                             <List.Item></List.Item>
                                             <List.Item>
@@ -75,7 +75,7 @@ class LaunchPage extends Component{
                                             <List.Item></List.Item>
                                             <List.Item>
                                                 <List.Icon name="ethereum"/>
-                                                <List.Content><Header size='small'><p><b>The Clout DAO is a way for Bitclout users to join the Ethereum DeFi ecosystem.</b></p></Header></List.Content>
+                                                <List.Content><Header size='small'><p><b>The Clout DAO is a way for Bitclout users to join the Polygon DeFi ecosystem.</b></p></Header></List.Content>
                                             </List.Item>
                                             <List.Item></List.Item>
                                             <List.Item>
