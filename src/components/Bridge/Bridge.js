@@ -482,7 +482,7 @@ class Bridge extends Component{
                                                                       : <Button disabled>Sign Bridge Message</Button>
 
             var btnSection = this.props.signedBridgeMessage !== null &&  (!this.state.disableBridgeUserButton)
-                        ? <Button onClick={this.handleBridgeRequest}>Bridge User accounts</Button>
+                        ? <Button onClick={this.handleBridgeRequest}>Bridge User Accounts</Button>
                         : <Button disabled>Bridge User accounts</Button>;
             
             let content = 
