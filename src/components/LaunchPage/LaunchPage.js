@@ -20,6 +20,7 @@ class LaunchPage extends Component{
     }
 
     render(){
+        //https://www.kucoin.com/ucenter/signup?rcode=r3375NV
         return(
             <Segment style={{overflow:'auto', maxHeight:"92.25vh"}}>
                 <Grid >
@@ -102,7 +103,7 @@ class LaunchPage extends Component{
                         <Grid.Column>
                             <Container>
                                 <p id="heading1">Product Demonstration Video</p>
-                                <Embed id='efaOS7gKvTQ' source='youtube'  aspectRatio='21:9' autoplay active placeholder={CloutBridgeLogo}></Embed>
+                                <Embed id='JxHcrTCu4vQ' source='youtube'  aspectRatio='21:9' autoplay active placeholder={CloutBridgeLogo}></Embed>
                             </Container>
                         </Grid.Column>
                     </Grid.Row>
