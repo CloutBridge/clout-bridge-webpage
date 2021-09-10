@@ -139,6 +139,17 @@ class Main extends Component{
                                 </Grid>
                             </a>
                         </Menu.Item>
+
+                        <Menu.Item >
+                            <a href="https://github.com/cloutbridge/" target="_blank" rel="noreferrer">
+                                <Grid columns={4}>
+                                    <Grid.Column><Icon name='github' color='black' size='large'/></Grid.Column>
+                                    <Grid.Column><Header size='large'><p>Github</p></Header></Grid.Column>
+                                    <Grid.Column></Grid.Column>
+                                    <Grid.Column></Grid.Column>
+                                </Grid>
+                            </a>
+                        </Menu.Item>
                     </Sidebar>
                     <Sidebar.Pusher>
                         <HashRouter>
