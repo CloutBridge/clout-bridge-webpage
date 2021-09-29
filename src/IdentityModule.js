@@ -76,7 +76,6 @@ export default class IdentityModule{
         });
     }
 
-
     handleInit(e){
         if (!this.init) {
           this.init = true;
