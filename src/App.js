@@ -9,7 +9,7 @@ import {
 
 import Web3 from "web3";
 
-import bitcloutBridgeContract from "./contracts/BridgedClout.json";
+import bitcloutBridgeContract from "./bin/src/Contracts/BridgedClout.json";
 
 import TopBar from "./components/TopBar/TopBar.js";
 
