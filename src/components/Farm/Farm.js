@@ -366,7 +366,7 @@ class Farm extends Component{
 
         if(this.props.prod){
             farm = <div id='farmSegment'>
-                     <p style={{'font-size': '14pt'}}> DeSo Farm Coming Soon... </p>
+                     <p style={{'font-size': '14pt'}}> DeSo Farm Coming Soon. </p>
                   </div>
         }
 

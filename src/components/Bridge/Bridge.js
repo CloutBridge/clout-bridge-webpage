@@ -95,7 +95,7 @@ class Bridge extends Component{
         this.setState(() => ({countdownComponent: content}));*/
 
         var content = <Container>
-                        <p style ={{'font-size': '14pt'}}>Bridge Closed For Token Rebranding...</p>
+                        <p style ={{'font-size': '14pt'}}>Bridge Closed For Token Rebranding.</p>
                       </Container>
 
         this.setState(() => ({countdownComponent: content}))
