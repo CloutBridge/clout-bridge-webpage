@@ -347,18 +347,34 @@ class Farm extends Component{
         this.cards();
     }
 
-    render(){
-        return(
-            <Segment style={{overflow:'auto', minHeight: "75vh", maxHeight:"92.25vh", padding: '2em 0em' }}>
-                
-                <Container >
-                    <div id='farmSegment'>
+    farmSegment(){
+
+        let content = <div id='farmSegment'>
                         {this.state.connectedContent}
                         {this.state.header}
                         <Card.Group centered>
                             {this.state.cards}
                         </Card.Group>
                     </div>
+
+        return content
+    }
+
+    render(){
+
+        var farm = this.farmSegment()
+
+        if(this.props.prod){
+            farm = <div id='farmSegment'>
+                     <p style={{'font-size': '14pt'}}> DeSo Farm Coming Soon... </p>
+                  </div>
+        }
+
+        return(
+            <Segment style={{overflow:'auto', minHeight: "75vh", maxHeight:"92.25vh", padding: '2em 0em' }}>
+                
+                <Container>
+                    {farm}
                 </Container>
             </Segment>
         );

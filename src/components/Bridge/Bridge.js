@@ -78,6 +78,7 @@ class Bridge extends Component{
       }
 
     countdown = async () =>{
+        /*
         var currentTime = new Date().getTime();
         var distance = this.state.countdownDate - currentTime;
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -91,7 +92,13 @@ class Bridge extends Component{
                 <p id='launchCountdown'>{days}d {hours}h {minutes}m {seconds}s</p>
             </Container>
         ;
-        this.setState(() => ({countdownComponent: content}));
+        this.setState(() => ({countdownComponent: content}));*/
+
+        var content = <Container>
+                        <p style ={{'font-size': '14pt'}}>Bridge Closed For Token Rebranding...</p>
+                      </Container>
+
+        this.setState(() => ({countdownComponent: content}))
     }
 
     evaluateUserConnected = async () =>{
@@ -689,7 +696,6 @@ class Bridge extends Component{
         }
 
         return(
-
             <Segment style={{overflow:'auto', minHeight: "75vh", maxHeight:"92.25vh", padding: '2em 0em' }}>
                 {transparencyComponent}
                 <div id='spacer'></div>

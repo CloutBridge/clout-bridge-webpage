@@ -26,7 +26,7 @@ class App extends Component {
   constructor(){
     super();
 
-    var prod = false;
+    var prod = true;
 
     this.state = {
       web3: null, accounts: null, iframe: null, username: "Bitclout Sign-In", selectedUser: null, accessLevelHmac: null, encryptedSeedHex: null, contractInstance: null, contractAddress: "0xE81Dc722D7C7af37aDcF4CC66Ac62543AAeE1Ca2", 
@@ -130,9 +130,7 @@ class App extends Component {
   }
 
   render(){
-
     var ethAccount = this.state.accounts ?  this.state.accounts[0] : "Connect Metamask";
-
 
     var visible = this.state.toggleSideBar;
 
@@ -150,7 +148,6 @@ class App extends Component {
         
       </div>
     );
-
   }
 }
 
