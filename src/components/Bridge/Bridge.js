@@ -42,7 +42,7 @@ class Bridge extends Component{
     state = {connectedContent: <p>loading...</p>, mainContent: <p></p>,
             sendButtonText: "Send", 
             bridgeTransactionText: "", disableRemoveMintRequest: false, disableBridgeUserButton: false,
-            bcltAddressBridged: false, ethAddressBridged: false, accountsLinked: false, bridgeOpen: false,
+            bcltAddressBridged: false, ethAddressBridged: false, accountsLinked: false, bridgeOpen: false, currentGasPrice: null,
             bitcloutBalance: 0, ethereumCloutBalance: 0, cloutInput: null, dropDownNetwork: null, transferError: null,
             transferAmount: 0,
             countdownDate: new Date("Sep 3, 2021 22:00:00").getTime(), countdownComponent: null,
@@ -134,8 +134,7 @@ class Bridge extends Component{
         return;
     }
 
-    evaluate 
-
+    
     evaluateEthereumState = async () =>{
         
         var ethereumCalls = [];
@@ -184,7 +183,7 @@ class Bridge extends Component{
         //console.log(` bcltAddressBridged: ${bcltAddressBridged},  ethAddressBridged:${ethAddressBridged}, ethToBcltAddress:${ethToBcltAddress}, ethereumCloutBalance:${ethereumCloutBalance}, bridgedCloutTotalBalance:${bridgedCloutTotalBalance}`)
 
         this.setState(() => ({bridgeFee, mintFee,
-            bcltAddressBridged, ethAddressBridged, ethToBcltAddress, ethereumCloutBalance, bridgedCloutTotalBalance, accountsLinked, bridgeOpen
+            bcltAddressBridged, ethAddressBridged, ethToBcltAddress, ethereumCloutBalance, bridgedCloutTotalBalance, accountsLinked, bridgeOpen, currentGasPrice
         }));
         
     }
@@ -691,7 +690,7 @@ class Bridge extends Component{
 
         return(
 
-            <Segment style={{overflow:'auto', maxHeight:"92.25vh", padding: '2em 0em' }}>
+            <Segment style={{overflow:'auto', minHeight: "75vh", maxHeight:"92.25vh", padding: '2em 0em' }}>
                 {transparencyComponent}
                 <div id='spacer'></div>
                 <Container textAlign='center'>

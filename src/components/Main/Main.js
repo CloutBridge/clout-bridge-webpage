@@ -19,6 +19,8 @@ import LaunchPage from "../LaunchPage/LaunchPage.js";
 
 import Bridge from "../Bridge/Bridge.js";
 
+import Farm from "../Farm/Farm"
+
 
 class Main extends Component{
 
@@ -129,6 +131,17 @@ class Main extends Component{
                             </a>
                          </Menu.Item>
 
+                         <Menu.Item>
+                            <NavLink to = "/farm">
+                                <Grid columns={4}>
+                                    <Grid.Column><img src={farm} alt=""/></Grid.Column>
+                                    <Grid.Column><Header size='large'><p>Farm</p></Header></Grid.Column>
+                                    <Grid.Column></Grid.Column>
+                                    <Grid.Column></Grid.Column>
+                                </Grid>
+                            </NavLink>
+                        </Menu.Item>
+
                         <Menu.Item >
                             <a href="https://clout-bridge.gitbook.io/clout-bridge/" target="_blank" rel="noreferrer">
                                 <Grid columns={4}>
@@ -154,6 +167,7 @@ class Main extends Component{
                     <Sidebar.Pusher>
                         <HashRouter>
                             <Route exact path='/bridge' render = {(routeProps) => (<Bridge handleBridgeRequest = {this.props.handleBridgeRequest} idModule={this.props.idModule}{...routeProps} {...this.props}/>)}/>
+                            <Route exact path='/farm' render = {(routeProps) => (<Farm {...routeProps} {...this.props}/>)} />
                             <Route exact path= '/' render ={(routeProps) => (<LaunchPage {...routeProps}/>)}/>
                         </HashRouter>
                     </Sidebar.Pusher>
