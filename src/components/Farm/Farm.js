@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import 'semantic-ui-css/semantic.min.css';
 import {Segment, Container, Header, Button, Input, Divider, Card, Image} from 'semantic-ui-react';
 
-import web3Instance from '../../api/web3Instance';
-import masterChef from '../../api/MasterChef';
-import Token from '../../api/Token'
+import web3Instance from '../../api/web3Instance.js';
+import masterChef from '../../api/MasterChef.js';
+import Token from '../../api/Token.js'
 
 import "./Farm.css";
 

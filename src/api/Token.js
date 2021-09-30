@@ -1,7 +1,7 @@
 var LPToken = require('../bin/src/Contracts/Token.json');
 
 // Class to handle requests to the lpToken contract.
-module.exports = class Token{
+class Token{
     constructor(_web3Instance, _contractAddress = null, _type = null){
         this.web3I = _web3Instance;
         this.web3 = this.web3I.getWeb3();
@@ -70,3 +70,5 @@ module.exports = class Token{
         return await this.contract.methods.token1.call().call();
     }
 }
+
+export default Token

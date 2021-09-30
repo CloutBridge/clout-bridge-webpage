@@ -3,7 +3,7 @@ const HDKey = require('hdkey');
 const bip39 = require('bip39');
 
 // class to handle a web3 instanace.
-module.exports = class web3Instance{
+class web3Instance{
 
     constructor(_network, _mnemonic, _selectedAccount = 0, _web3 = null){
         if(_web3 === null){
@@ -266,3 +266,5 @@ module.exports = class web3Instance{
         }
     }
 }
+
+export default web3Instance

@@ -1,7 +1,7 @@
 const masterChef = require('../bin/src/Contracts/MasterChef.json');
 const web3Instance = require('./web3Instance');
 
-module.exports = class MasterChef{
+class MasterChef{
 
     constructor(_web3Instance, _contractAddress = null){
         this.web3I = _web3Instance;
@@ -80,6 +80,6 @@ module.exports = class MasterChef{
     updatePool = async (_pid) =>{
         return await this.web3I.sendEthTransaction(this.contract.methods.updatePool(_pid), this.web3I.getSelectedAccount(), this.contractAddress);
     }
-
-
 }
+
+export default MasterChef
