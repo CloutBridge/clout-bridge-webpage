@@ -135,7 +135,6 @@ class Farm extends Component{
 
             this.cards();
         }
-
     }
 
     cards(){
